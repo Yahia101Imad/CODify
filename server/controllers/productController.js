@@ -120,3 +120,79 @@ exports.getProductById = async (req, res) => {
     });
   }
 };
+
+exports.updateProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, description, price, images, size, color } = req.body;
+
+    // check if id of product
+    if (!id) {
+      return res.status(400).json({
+        message: "Product ID is required",
+      });
+    }
+
+    // find the product
+    const product = await Product.findById(id);
+
+    // check if exists
+    if (!product) {
+      return res.status(404).json({
+        message: "Product not found",
+      });
+    }
+
+    // check if the product for the user updating (important!)
+    if (product.sellerId.toString() !== req.user.id) {
+      return res.status(403).json({
+        message: "Unauthorized",
+      });
+    }
+
+    // update only the data changed
+    if (name) product.name = name;
+    if (description) product.description = description;
+    if (price) {
+      if (price <= 0) {
+        return res.status(400).json({
+          message: "Price must be greater than 0",
+        });
+      }
+      product.price = price;
+    }
+
+    if (images) {
+      if (!Array.isArray(images)) {
+        return res.status(400).json({
+          message: "Images must be an array",
+        });
+      }
+      product.images = images;
+    }
+
+    if (size) product.size = size;
+    if (color) product.color = color;
+
+    // save the update
+    const updatedProduct = await product.save();
+
+    res.status(200).json({
+      success: true,
+      data: updatedProduct,
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    if (error.name === "CastError") {
+      return res.status(400).json({
+        message: "Invalid product ID",
+      });
+    }
+
+    res.status(500).json({
+      message: "Server error",
+    });
+  }
+};
