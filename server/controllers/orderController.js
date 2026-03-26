@@ -67,3 +67,40 @@ exports.createOrder = async (req, res) => {
     });
   }
 };
+
+exports.getOrdersBySeller = async (req, res) => {
+  try {
+    const { sellerId } = req.params;
+
+    // check if sellerId in params
+    if (!sellerId) {
+      return res.status(400).json({
+        message: "Seller ID is required",
+      });
+    }
+
+    // get orders
+    const orders = await Order.find({ sellerId })
+      .populate("productId", "name price images")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: orders.length,
+      data: orders,
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    if (error.name === "CastError") {
+      return res.status(400).json({
+        message: "Invalid seller ID",
+      });
+    }
+
+    res.status(500).json({
+      message: "Server error",
+    });
+  }
+};
