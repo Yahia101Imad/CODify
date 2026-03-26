@@ -166,3 +166,53 @@ exports.updateOrderStatus = async (req, res) => {
     });
   }
 };
+
+exports.getOrderById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // check if id in params (note: the id here is the order "_id")
+    if (!id) {
+      return res.status(400).json({
+        message: "Order ID is required",
+      });
+    }
+
+    // find order
+    const order = await Order.findById(id)
+      .populate("productId", "name price images")
+      .populate("sellerId", "storeName profileImage");
+
+    // if order not exists
+    if (!order) {
+      return res.status(404).json({
+        message: "Order not found",
+      });
+    }
+
+    // check if order for the seller (important!)
+    if (!req.user || order.sellerId._id.toString() !== req.user.id) {
+      return res.status(403).json({
+        message: "Unauthorized",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: order,
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    if (error.name === "CastError") {
+      return res.status(400).json({
+        message: "Invalid order ID",
+      });
+    }
+
+    res.status(500).json({
+      message: "Server error",
+    });
+  }
+};
