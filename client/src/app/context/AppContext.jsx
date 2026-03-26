@@ -1,10 +1,10 @@
-import { createContext, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { toast } from 'sonner';
 
-// create new context
+// create Context
 const AppContext = createContext();
 
-// data permanently
+// Mock data
 const mockProducts = [
   {
     id: '1',
@@ -61,7 +61,6 @@ const mockOrders = [
   },
 ];
 
-// cover all the app and provide data
 export function AppProvider({ children }) {
   const [user, setUser] = useState(null);
   const [products, setProducts] = useState(mockProducts);
@@ -72,8 +71,8 @@ export function AppProvider({ children }) {
       setUser({
         id: 'seller1',
         name: 'John Seller',
-        email: email,
-        username: 'johnSeller',
+        email,
+        username: 'johnseller',
         storeName: "John's Fashion Store",
         profilePicture: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200'
       });
@@ -145,7 +144,13 @@ export function AppProvider({ children }) {
     >
       {children}
     </AppContext.Provider>
-  );
+  ); 
 }
-
-export { AppContext };
+// hook
+export function useApp() {
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error('useApp must be used within AppProvider');
+  }
+  return context;
+}
