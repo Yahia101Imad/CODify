@@ -88,3 +88,39 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
+exports.getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // check if "id" in params
+    if (!id) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    // check if user exists
+    const user = await User.findById(id).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // send data
+    res.status(200).json({
+      success: true,
+      data: user,
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    // error in the id format
+    if (error.name === "CastError") {
+      return res.status(400).json({ message: "Invalid user ID" });
+    }
+
+    res.status(500).json({
+      message: "Server error",
+    });
+  }
+};

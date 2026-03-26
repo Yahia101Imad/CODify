@@ -12,6 +12,7 @@ app.use(express.json());
 
 // routes
 app.use("/api/auth", userRoutes);
+app.use("/api/users", userRoutes);
 
 // connect to DB
 connectDB();
