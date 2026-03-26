@@ -77,3 +77,46 @@ exports.getProductsBySeller = async (req, res) => {
     });
   }
 };
+
+exports.getProductById = async (req, res) => {
+  try {
+    // NOTE: we mean by the "id" here is the _id of the product (that generated automatically by mongoDB)
+    const { id } = req.params;
+
+    // check if id in params
+    if (!id) {
+      return res.status(400).json({
+        message: "Product ID is required",
+      });
+    }
+
+    // find product
+    const product = await Product.findById(id)
+      .populate("sellerId", "storeName profileImage");
+
+    // check if product exists
+    if (!product) {
+      return res.status(404).json({
+        message: "Product not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: product,
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    if (error.name === "CastError") {
+      return res.status(400).json({
+        message: "Invalid product ID",
+      });
+    }
+
+    res.status(500).json({
+      message: "Server error",
+    });
+  }
+};
