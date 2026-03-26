@@ -124,3 +124,60 @@ exports.getUserById = async (req, res) => {
     });
   }
 };
+
+exports.updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { storeName, profileImage } = req.body;
+
+    // check if id in params
+    if (!id) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    // check if data changed to update
+    if (!storeName && !profileImage) {
+      return res.status(400).json({
+        message: "At least one field is required (storeName or profileImage)",
+      });
+    }
+
+    // an object has data updated
+    const updateData = {};
+
+    if (storeName) updateData.storeName = storeName;
+    if (profileImage) updateData.profileImage = profileImage;
+
+    // updating user
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      updateData,
+      {
+        new: true, // return version after updating
+        runValidators: true, // run validation
+      }
+    ).select("-password");
+
+    // if user does not exists
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: updatedUser,
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    // error in the id format
+    if (error.name === "CastError") {
+      return res.status(400).json({ message: "Invalid user ID" });
+    }
+
+    res.status(500).json({
+      message: "Server error",
+    });
+  }
+};
