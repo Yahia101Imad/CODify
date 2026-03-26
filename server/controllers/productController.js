@@ -196,3 +196,37 @@ exports.updateProduct = async (req, res) => {
     });
   }
 };
+
+exports.deleteProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ message: "Product ID is required" });
+    }
+
+    // deleting the product after checking the product is for the user deleting
+    const deletedProduct = await Product.findOneAndDelete({
+      _id: id,
+      sellerId: req.user.id,
+    });
+
+    if (!deletedProduct) {
+      return res.status(404).json({ message: "Product not found or unauthorized" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Product deleted successfully",
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    if (error.name === "CastError") {
+      return res.status(400).json({ message: "Invalid product ID" });
+    }
+
+    res.status(500).json({ message: "Server error" });
+  }
+};
