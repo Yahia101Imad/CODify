@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import { LandingPage } from "./pages/LandingPage";
-// import { AuthPage } from "./pages/AuthPage";
+import { AuthPage } from "./pages/AuthPage";
 // import { Dashboard } from "./pages/Dashboard";
 // import { StorePage } from "./pages/StorePage";
 // import { ProfilePage } from "./pages/ProfilePage";
@@ -12,10 +12,10 @@ export const router = createBrowserRouter([
     Component: LandingPage,
   }
 ,
-//   {
-//     path: "/auth",
-//     Component: AuthPage,
-//   },
+  {
+    path: "/auth",
+    Component: AuthPage,
+  },
 //   {
 //     path: "/dashboard",
 //     Component: Dashboard,
