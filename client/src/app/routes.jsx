@@ -4,7 +4,7 @@ import { AuthPage } from "./pages/AuthPage";
 import { Dashboard } from "./pages/Dashboard";
 import { StorePage } from "./pages/StorePage";
 import { ProfilePage } from "./pages/ProfilePage";
-// import { NotFound } from "./pages/NotFound";
+import { NotFound } from "./pages/NotFound";
 
 export const router = createBrowserRouter([
   {
@@ -28,8 +28,8 @@ export const router = createBrowserRouter([
     path: "/profile",
     Component: ProfilePage,
   },
-//   {
-//     path: "*",
-//     Component: NotFound,
-//   },
+  {
+    path: "*",
+    Component: NotFound,
+  },
 ]);

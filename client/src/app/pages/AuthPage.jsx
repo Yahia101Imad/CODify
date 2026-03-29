@@ -117,14 +117,25 @@ export function AuthPage() {
 
         <Card className="p-8 rounded-2xl shadow-xl">
           <Tabs defaultValue="login" className="w-full">
-  <TabsList className="grid w-full grid-cols-2 mb-6 bg-gray-200 p-1 rounded-md">
-    <TabsTrigger value="login" onClick={() => setErrors({})}>
-      Login
-    </TabsTrigger>
-    <TabsTrigger value="register" onClick={() => setErrors({})}>
-      Register
-    </TabsTrigger>
-  </TabsList>
+            <TabsList className="grid w-full grid-cols-2 gap-2 mb-6 p-1">
+              <TabsTrigger
+                value="login"
+                onClick={() => setErrors({})}
+                className="bg-gray-100 py-2 text-sm font-medium text-gray-700 transition-colors 
+               hover:bg-gray-200 rounded-sm"
+              >
+                Login
+              </TabsTrigger>
+
+              <TabsTrigger
+                value="register"
+                onClick={() => setErrors({})}
+                className="bg-gray-100 py-2 text-sm font-medium text-gray-700 transition-colors 
+               hover:bg-gray-200 rounded-sm"
+              >
+                Register
+              </TabsTrigger>
+            </TabsList>
 
             {/* Login Form */}
             <TabsContent value="login">
