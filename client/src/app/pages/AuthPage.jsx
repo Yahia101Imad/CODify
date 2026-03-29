@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-// import { ShoppingBag, Mail, Lock, User, Store } from "lucide-react";
 import { FaShoppingBag, FaUser, FaStore } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
@@ -16,10 +15,11 @@ import {
   TabsTrigger,
 } from "../components/ui/tabs";
 import { toast } from "sonner";
+import { apiLogin } from "../services/api";
 
 export function AuthPage() {
   const navigate = useNavigate();
-  const { login, register } = useApp();
+  const { register } = useApp();
 
   const [loginData, setLoginData] = useState({
     email: "",
@@ -37,28 +37,39 @@ export function AuthPage() {
 
   const [errors, setErrors] = useState({});
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    const newErrors = {};
+  const handleLogin = async (e) => {
+  e.preventDefault();
 
-    if (!loginData.email) newErrors.email = "Email is required";
-    if (!loginData.password) newErrors.password = "Password is required";
+  const newErrors = {};
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
+  // check fields
+  if (!loginData.email) newErrors.email = "Email is required";
+  if (!loginData.password) newErrors.password = "Password is required";
 
-    const success = login(loginData.email, loginData.password);
-    if (success) {
-      toast.success("Welcome back!", {
-        description: "Redirecting to your dashboard...",
-      });
-      setTimeout(() => navigate("/dashboard"), 500);
-    } else {
-      setErrors({ general: "Invalid credentials" });
-    }
-  };
+  if (Object.keys(newErrors).length > 0) {
+    setErrors(newErrors);
+    return;
+  }
+
+  try {
+    // call apiLogin fuc from api.jsx
+    const res = await apiLogin({ email: loginData.email, password: loginData.password });
+
+    // if succeed
+    toast.success("Welcome back!", {
+      description: "Redirecting to your dashboard...",
+    });
+
+    // go to dashboard in half sec
+    setTimeout(() => navigate("/dashboard"), 500);
+
+    console.log(res)
+  } catch (err) {
+    // if fail
+    setErrors({ general: "Invalid credentials" });
+    console.error(err);
+  }
+};
 
   const handleRegister = (e) => {
     e.preventDefault();

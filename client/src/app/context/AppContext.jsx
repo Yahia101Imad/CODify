@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { toast } from 'sonner';
 
 // create Context
@@ -66,20 +66,20 @@ export function AppProvider({ children }) {
   const [products, setProducts] = useState(mockProducts);
   const [orders, setOrders] = useState(mockOrders);
 
-  const login = (email, password) => {
-    if (email && password) {
-      setUser({
-        id: 'seller1',
-        name: 'John Seller',
-        email,
-        username: 'johnseller',
-        storeName: "John's Fashion Store",
-        profilePicture: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200'
-      });
-      return true;
-    }
-    return false;
-  };
+  // const login = (email, password) => {
+  //   if (email && password) {
+  //     setUser({
+  //       id: 'seller1',
+  //       name: 'John Seller',
+  //       email,
+  //       username: 'johnseller',
+  //       storeName: "John's Fashion Store",
+  //       profilePicture: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200'
+  //     });
+  //     return true;
+  //   }
+  //   return false;
+  // };
 
   const register = (newUser, password) => {
     if (newUser.email && password) {
@@ -132,7 +132,6 @@ export function AppProvider({ children }) {
         user,
         products,
         orders,
-        login,
         register,
         logout,
         addProduct,
@@ -146,6 +145,7 @@ export function AppProvider({ children }) {
     </AppContext.Provider>
   ); 
 }
+
 // hook
 export function useApp() {
   const context = useContext(AppContext);
