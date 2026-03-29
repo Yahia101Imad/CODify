@@ -81,16 +81,16 @@ export function AppProvider({ children }) {
   //   return false;
   // };
 
-  const register = (newUser, password) => {
-    if (newUser.email && password) {
-      setUser({
-        id: 'seller' + Date.now(),
-        ...newUser
-      });
-      return true;
-    }
-    return false;
-  };
+  // const register = (newUser, password) => {
+  //   if (newUser.email && password) {
+  //     setUser({
+  //       id: 'seller' + Date.now(),
+  //       ...newUser
+  //     });
+  //     return true;
+  //   }
+  //   return false;
+  // };
 
   const logout = () => setUser(null);
 
@@ -132,7 +132,6 @@ export function AppProvider({ children }) {
         user,
         products,
         orders,
-        register,
         logout,
         addProduct,
         updateProduct,

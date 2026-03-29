@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
+// import { useNavigate } from 'react-router';
 // import { 
 //   Package, 
 //   ShoppingCart, 
@@ -33,17 +33,22 @@ import { Badge } from '../components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 
 export function Dashboard() {
-const navigate = useNavigate();
+// const navigate = useNavigate();
 const { user, products, orders, deleteProduct, updateOrder } = useApp();
 const [activeTab, setActiveTab] = useState('products');
 const [isAddProductOpen, setIsAddProductOpen] = useState(false);
 const [editingProduct, setEditingProduct] = useState(null);
 
   useEffect(() => {
-    if (!user) {
-      navigate('/auth');
-    }
-  }, [user, navigate]);
+  // const token = localStorage.getItem("token");
+  // if (!token) {
+  //   navigate("/auth");
+  //   return;
+  // }
+
+  // this code is for fetching data of the user with token saved in localstorage
+  // fetchUserData(token).then((data) => setUser(data));
+}, []);
 
   if (!user) return null;
 
