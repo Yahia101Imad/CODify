@@ -22,7 +22,6 @@ API.interceptors.request.use(
 
 // Auth APIs
 
-// Login
 export const apiLogin = async (userData) => {
   try {
     const res = await API.post("/auth/login", userData);
@@ -37,7 +36,6 @@ export const apiLogin = async (userData) => {
   }
 };
 
-// Register
 export const apiRegister = async (userData) => {
   try {
     const res = await API.post("/auth/register", userData);
@@ -45,4 +43,34 @@ export const apiRegister = async (userData) => {
   } catch (error) {
     throw error.response?.data || error.message;
   }
+};
+
+// Fetch APIs
+
+// USER
+export const fetchUserData = async (id) => {
+  const { data } = await API.get(`/users/${id}`);
+  return data;
+};
+
+// PRODUCTS
+export const fetchProductsBySeller = async (id) => {
+  const { data } = await API.get(`/products/seller/${id}`);
+  return data;
+};
+
+export const fetchProductsById = async (id) => {
+  const { data } = await API.get(`/products/${id}`);
+  return data;
+};
+
+// ORDERS
+export const fetchOrdersBySeller = async (id) => {
+  const { data } = await API.get(`/orders/seller/${id}`);
+  return data;
+};
+
+export const fetchOrdersById = async (id) => {
+  const { data } = await API.get(`/orders/${id}`);
+  return data;
 };

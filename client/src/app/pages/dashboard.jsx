@@ -1,19 +1,5 @@
 import { useState, useEffect } from 'react';
-// import { useNavigate } from 'react-router';
-// import { 
-//   Package, 
-//   ShoppingCart, 
-//   Settings, 
-//   User, 
-//   Plus, 
-//   Edit, 
-//   Trash2, 
-//   TrendingUp,
-//   AlertCircle,
-//   CheckCircle,
-//   Clock,
-//   ExternalLink
-// } from 'lucide-react';
+import { useNavigate } from 'react-router';
 import {
   FiPackage,
   FiShoppingCart,
@@ -28,29 +14,28 @@ import { useApp } from '../context/AppContext';
 import { Navbar } from '../components/Navbar';
 import { AddProductModal } from '../components/AddProductModal';
 import { Button } from '../components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Card, CardContent } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
+import { useUser } from "../hooks/useUser";
 
 export function Dashboard() {
-// const navigate = useNavigate();
-const { user, products, orders, deleteProduct, updateOrder } = useApp();
+const navigate = useNavigate();
+const { products, orders, deleteProduct, updateOrder } = useApp();
 const [activeTab, setActiveTab] = useState('products');
 const [isAddProductOpen, setIsAddProductOpen] = useState(false);
 const [editingProduct, setEditingProduct] = useState(null);
+const { user } = useUser();
 
   useEffect(() => {
-  // const token = localStorage.getItem("token");
-  // if (!token) {
-  //   navigate("/auth");
-  //   return;
-  // }
-
-  // this code is for fetching data of the user with token saved in localstorage
-  // fetchUserData(token).then((data) => setUser(data));
+  const token = localStorage.getItem("token");
+  if (!token) {
+    navigate("/auth");
+    return;
+  }
 }, []);
 
-  if (!user) return null;
+  // if (!user) return null;
 
   const stats = {
     totalProducts: products.length,
