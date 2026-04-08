@@ -6,16 +6,21 @@ import {
   FiPlus,
   FiTrash2
 } from "react-icons/fi";
-import { useApp } from "../context/AppContext";
+// import { useApp } from "../context/AppContext";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { Badge } from "./ui/badge";
+import { useCreateProduct } from "../hooks/useCreateProduct";
+import { useUpdateProduct } from "../hooks/useUpdateProduct";
 
 export function AddProductModal({ open, onClose, product }) {
-  const { addProduct, updateProduct } = useApp();
+  // const { addProduct, updateProduct } = useApp();
+ 
+ const { create, error: createError } = useCreateProduct();
+const { update, error: updateError } = useUpdateProduct();
 
   const [formData, setFormData] = useState({
     name: product?.name || "",
@@ -30,16 +35,40 @@ export function AddProductModal({ open, onClose, product }) {
   const [newColor, setNewColor] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
 
+  //   if (product) {
+  //     updateProduct(product.id, formData);
+  //   } else {
+  //     addProduct(formData);
+  //   }
+
+  //   onClose();
+  //   setFormData({
+  //     name: "",
+  //     price: 0,
+  //     description: "",
+  //     size: [],
+  //     color: [],
+  //     images: [],
+  //   });
+  // };
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
     if (product) {
-      updateProduct(product.id, formData);
+      // تحديث المنتج
+      await update(product.id, formData);
     } else {
-      addProduct(formData);
+      // إنشاء منتج جديد
+      await create(formData);
     }
 
     onClose();
+    // إعادة تعيين الفورم
     setFormData({
       name: "",
       price: 0,
@@ -48,7 +77,11 @@ export function AddProductModal({ open, onClose, product }) {
       color: [],
       images: [],
     });
-  };
+  } catch (err) {
+    console.log("Error creating/updating product:", err);
+    // يمكنك عرض error في UI إذا أحببت
+  }
+};
 
   const addSize = () => {
     if (newSize && !formData.size.includes(newSize)) {
@@ -94,6 +127,8 @@ export function AddProductModal({ open, onClose, product }) {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
+      {createError && <p className="text-red-500 text-sm">Error: {createError.message || createError}</p>}
+{updateError && <p className="text-red-500 text-sm">Error: {updateError.message || updateError}</p>}
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl">

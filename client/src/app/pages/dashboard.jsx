@@ -19,6 +19,7 @@ import { Badge } from '../components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { useUser } from "../hooks/useUser";
 import {jwtDecode} from "jwt-decode";
+import { useProductsBySeller } from "../hooks/useProductsBySeller";
 
 export function Dashboard() {
 const navigate = useNavigate();
@@ -27,12 +28,15 @@ const [activeTab, setActiveTab] = useState('products');
 const [isAddProductOpen, setIsAddProductOpen] = useState(false);
 const [editingProduct, setEditingProduct] = useState(null);
 
+// decoded the token id 
 const token = localStorage.getItem("token");
 const decoded = jwtDecode(token);
 
 const userId = decoded.id;
 
+// fetching data from hooks
 const { user } = useUser(userId);
+const { products } = useProductsBySeller(userId);
 
   useEffect(() => {
   const token = localStorage.getItem("token");
@@ -44,14 +48,14 @@ const { user } = useUser(userId);
 
   // if (!user) return null;
 
-//   useEffect(() => {
-//   console.log(user);
-// }, [user]);
+  useEffect(() => {
+  console.log(products);
+}, [products]);
 
 // console.log(decoded);
 
   const stats = {
-    // totalProducts: products.length,
+    totalProducts: products.length,
     // totalOrders: orders.length,
     // pendingOrders: orders.filter(o => o.status === 'pending').length,
     // revenue: orders.reduce((sum, order) => sum + order.total, 0)

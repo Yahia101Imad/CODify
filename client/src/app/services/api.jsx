@@ -64,6 +64,26 @@ export const fetchProductsById = async (id) => {
   return data;
 };
 
+// CREATE PRODUCT
+export const createProduct = async (productData) => {
+  try {
+    const { data } = await API.post("/products", productData);
+    return data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
+
+// UPDATE PRODUCT
+export const updateProduct = async (id, productData) => {
+  try {
+    const { data } = await API.put(`/products/${id}`, productData);
+    return data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
+
 // ORDERS
 export const fetchOrdersBySeller = async (id) => {
   const { data } = await API.get(`/orders/seller/${id}`);
