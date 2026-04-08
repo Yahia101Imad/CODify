@@ -8,7 +8,7 @@ export const useProductsBySeller = (id) => {
     if (!id) return;
 
     fetchProductsBySeller(id)
-      .then(setProducts)
+      .then((res) => setProducts(res.data))
       .catch((err) => console.log(err));
   }, [id]);
 

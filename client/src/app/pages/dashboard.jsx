@@ -10,7 +10,7 @@ import {
   FiAlertCircle,
   FiExternalLink
 } from "react-icons/fi";
-import { useApp } from '../context/AppContext';
+// import { useApp } from '../context/AppContext';
 import { Navbar } from '../components/Navbar';
 import { AddProductModal } from '../components/AddProductModal';
 import { Button } from '../components/ui/button';
@@ -18,14 +18,21 @@ import { Card, CardContent } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { useUser } from "../hooks/useUser";
+import {jwtDecode} from "jwt-decode";
 
 export function Dashboard() {
 const navigate = useNavigate();
-const { products, orders, deleteProduct, updateOrder } = useApp();
+// const { products, orders, deleteProduct, updateOrder } = useApp();
 const [activeTab, setActiveTab] = useState('products');
 const [isAddProductOpen, setIsAddProductOpen] = useState(false);
 const [editingProduct, setEditingProduct] = useState(null);
-const { user } = useUser();
+
+const token = localStorage.getItem("token");
+const decoded = jwtDecode(token);
+
+const userId = decoded.id;
+
+const { user } = useUser(userId);
 
   useEffect(() => {
   const token = localStorage.getItem("token");
@@ -37,11 +44,17 @@ const { user } = useUser();
 
   // if (!user) return null;
 
+//   useEffect(() => {
+//   console.log(user);
+// }, [user]);
+
+// console.log(decoded);
+
   const stats = {
-    totalProducts: products.length,
-    totalOrders: orders.length,
-    pendingOrders: orders.filter(o => o.status === 'pending').length,
-    revenue: orders.reduce((sum, order) => sum + order.total, 0)
+    // totalProducts: products.length,
+    // totalOrders: orders.length,
+    // pendingOrders: orders.filter(o => o.status === 'pending').length,
+    // revenue: orders.reduce((sum, order) => sum + order.total, 0)
   };
 
   const handleEditProduct = (product) => {
@@ -72,7 +85,7 @@ const { user } = useUser();
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Welcome back, {user.name}!</h1>
+          <h1 className="text-3xl font-bold mb-2">Welcome back, {user?.username}!</h1>
           <p className="text-gray-600">Manage your store and track your performance</p>
         </div>
 
@@ -263,7 +276,7 @@ const { user } = useUser();
           <div>
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold">Orders</h2>
-              <a href={`/store/${user.username}`} target="_blank" rel="noopener noreferrer">
+              <a href={`/store/${user?.username}`} target="_blank" rel="noopener noreferrer">
                 <Button variant="outline">
                   <FiExternalLink size={16} className="mr-2" />
                   View Your Store

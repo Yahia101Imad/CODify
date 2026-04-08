@@ -5,28 +5,28 @@ import { toast } from 'sonner';
 const AppContext = createContext();
 
 // Mock data
-const mockProducts = [
-  {
-    id: '1',
-    name: 'Summer Cotton T-Shirt',
-    price: 299,
-    description: 'Comfortable cotton t-shirt perfect for summer',
-    size: ['S', 'M', 'L', 'XL'],
-    color: ['White', 'Black', 'Navy'],
-    images: ['https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400'],
-    sellerId: 'seller1'
-  },
-  {
-    id: '2',
-    name: 'Denim Jeans',
-    price: 799,
-    description: 'Classic fit denim jeans',
-    size: ['28', '30', '32', '34'],
-    color: ['Blue', 'Black'],
-    images: ['https://images.unsplash.com/photo-1542272604-787c3835535d?w=400'],
-    sellerId: 'seller1'
-  },
-];
+// const mockProducts = [
+//   {
+//     id: '1',
+//     name: 'Summer Cotton T-Shirt',
+//     price: 299,
+//     description: 'Comfortable cotton t-shirt perfect for summer',
+//     size: ['S', 'M', 'L', 'XL'],
+//     color: ['White', 'Black', 'Navy'],
+//     images: ['https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400'],
+//     sellerId: 'seller1'
+//   },
+//   {
+//     id: '2',
+//     name: 'Denim Jeans',
+//     price: 799,
+//     description: 'Classic fit denim jeans',
+//     size: ['28', '30', '32', '34'],
+//     color: ['Blue', 'Black'],
+//     images: ['https://images.unsplash.com/photo-1542272604-787c3835535d?w=400'],
+//     sellerId: 'seller1'
+//   },
+// ];
 
 const mockOrders = [
   {
@@ -63,7 +63,7 @@ const mockOrders = [
 
 export function AppProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [products, setProducts] = useState(mockProducts);
+  // const [products, setProducts] = useState(mockProducts);
   const [orders, setOrders] = useState(mockOrders);
 
   // const login = (email, password) => {
@@ -94,25 +94,25 @@ export function AppProvider({ children }) {
 
   const logout = () => setUser(null);
 
-  const addProduct = (product) => {
-    const newProduct = {
-      ...product,
-      id: Date.now().toString(),
-      sellerId: user?.id || ''
-    };
-    setProducts([...products, newProduct]);
-    toast.success('Product added successfully!');
-  };
+  // const addProduct = (product) => {
+  //   const newProduct = {
+  //     ...product,
+  //     id: Date.now().toString(),
+  //     sellerId: user?.id || ''
+  //   };
+  //   setProducts([...products, newProduct]);
+  //   toast.success('Product added successfully!');
+  // };
 
-  const updateProduct = (id, updates) => {
-    setProducts(products.map(p => p.id === id ? { ...p, ...updates } : p));
-    toast.success('Product updated successfully!');
-  };
+  // const updateProduct = (id, updates) => {
+  //   setProducts(products.map(p => p.id === id ? { ...p, ...updates } : p));
+  //   toast.success('Product updated successfully!');
+  // };
 
-  const deleteProduct = (id) => {
-    setProducts(products.filter(p => p.id !== id));
-    toast.success('Product deleted successfully!');
-  };
+  // const deleteProduct = (id) => {
+  //   setProducts(products.filter(p => p.id !== id));
+  //   toast.success('Product deleted successfully!');
+  // };
 
   const updateOrder = (id, status) => {
     setOrders(orders.map(o => o.id === id ? { ...o, status } : o));
@@ -130,12 +130,12 @@ export function AppProvider({ children }) {
     <AppContext.Provider
       value={{
         user,
-        products,
+        // products,
         orders,
         logout,
-        addProduct,
-        updateProduct,
-        deleteProduct,
+        // addProduct,
+        // updateProduct,
+        // deleteProduct,
         updateOrder,
         updateProfile
       }}

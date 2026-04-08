@@ -8,7 +8,7 @@ export const useUser = (id) => {
     if (!id) return;
 
     fetchUserData(id)
-      .then(setUser)
+      .then((res) => setUser(res.data))
       .catch((err) => console.log(err));
   }, [id]);
 
