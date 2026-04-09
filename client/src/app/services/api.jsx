@@ -80,6 +80,7 @@ export const updateProduct = async (id, productData) => {
     const { data } = await API.put(`/products/${id}`, productData);
     return data;
   } catch (error) {
+    console.log(id)
     throw error.response?.data || error.message;
   }
 };

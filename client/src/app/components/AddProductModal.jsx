@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import { X, Upload, Plus, Trash2 } from "lucide-react";
 import {
   FiX,
@@ -56,18 +56,40 @@ const { update, error: updateError } = useUpdateProduct();
   //   });
   // };
 
+  useEffect(() => {
+  if (product) {
+    setFormData({
+      name: product.name,
+      price: product.price,
+      description: product.description,
+      size: product.size,
+      color: product.color,
+      images: product.images,
+    });
+  } else {
+    setFormData({
+      name: "",
+      price: 0,
+      description: "",
+      size: [],
+      color: [],
+      images: [],
+    });
+  }
+}, [product]);
+
   const handleSubmit = async (e) => {
   e.preventDefault();
 
   try {
     if (product) {
-      await update(product.id, formData);
+      await update(product._id, formData);
     } else {
       await create(formData);
     }
 
     if (refetch) {
-      await refetch(); // 🔥 هذا هو المفتاح
+      await refetch();
     }
 
     onClose();

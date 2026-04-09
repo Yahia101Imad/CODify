@@ -10,7 +10,8 @@ export const useUpdateProduct = () => {
       return res;
     } catch (err) {
       setError(err);
-      console.log(err);
+      console.log("Update error:", err);
+      throw err;
     }
   };
 
