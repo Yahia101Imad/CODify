@@ -1,16 +1,23 @@
 import { useEffect, useState } from "react";
-import { fetchOrdersBySeller } from "../api/api";
+import { getOrdersBySeller } from "../services/api";
 
-export const useOrdersBySeller = (id) => {
+export const useOrdersBySeller = (sellerId) => {
   const [orders, setOrders] = useState([]);
 
+  const fetchOrders = async () => {
+    try {
+      const data = await getOrdersBySeller(sellerId);
+
+      setOrders(Array.isArray(data) ? data : data.orders || []);
+    } catch (error) {
+      console.error(error);
+      setOrders([]);
+    }
+  };
+
   useEffect(() => {
-    if (!id) return;
+    if (sellerId) fetchOrders();
+  }, [sellerId]);
 
-    fetchOrdersBySeller(id)
-      .then(setOrders)
-      .catch((err) => console.log(err));
-  }, [id]);
-
-  return { orders };
+  return { orders, refetch: fetchOrders };
 };

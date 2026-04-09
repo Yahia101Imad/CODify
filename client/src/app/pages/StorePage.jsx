@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router';
 // import { ShoppingBag, Filter, X } from 'lucide-react';
 import { FiShoppingBag, FiFilter, FiX } from "react-icons/fi";
-import { useApp } from '../context/AppContext';
+// import { useApp } from '../context/AppContext';
 import { Button } from '../components/ui/button';
 import { Card } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
@@ -11,10 +11,11 @@ import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { toast } from 'sonner';
+import { useStoreProducts } from "../hooks/useStoreProduct";
 
 export function StorePage() {
   const { username } = useParams();
-  const { products } = useApp();
+  // const { products } = useApp();
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [orderModalOpen, setOrderModalOpen] = useState(false);
   const [filterSize, setFilterSize] = useState('all');
@@ -29,13 +30,17 @@ export function StorePage() {
     selectedColor: ''
   });
 
+  // console.log(username)
+
+  const { products, store } = useStoreProducts(username);
+
   // Mock store data
-  const store = {
-    name: 'John\'s Fashion Store',
-    username: username || 'johnseller',
-    description: 'Premium quality clothing at affordable prices',
-    banner: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200'
-  };
+  // const store = {
+  //   name: 'John\'s Fashion Store',
+  //   username: username || 'johnseller',
+  //   description: 'Premium quality clothing at affordable prices',
+  //   banner: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200'
+  // };
 
   // Get all unique sizes and colors
   const allSizes = Array.from(new Set(products.flatMap(p => p.size)));
@@ -81,7 +86,7 @@ export function StorePage() {
       <div className="relative h-64 bg-gradient-to-r from-violet-600 to-indigo-600 overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <img 
-            src={store.banner}
+            src={store?.banner}
             alt="Store banner"
             className="w-full h-full object-cover"
           />
@@ -93,11 +98,11 @@ export function StorePage() {
                 <FiShoppingBag className="text-violet-600" size={32} />
               </div>
               <div>
-                <h1 className="text-4xl font-bold">{store.name}</h1>
-                <p className="text-violet-100">@{store.username}</p>
+                <h1 className="text-4xl font-bold">{store?.name}</h1>
+                <p className="text-violet-100">@{store?.username}</p>
               </div>
             </div>
-            <p className="text-lg text-violet-100">{store.description}</p>
+            <p className="text-lg text-violet-100">{store?.description}</p>
           </div>
         </div>
       </div>
@@ -161,7 +166,7 @@ export function StorePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredProducts.map((product) => (
             <Card 
-              key={product.id} 
+              key={product._id}
               className="rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer group"
               onClick={() => handleOrderClick(product)}
             >
@@ -181,11 +186,11 @@ export function StorePage() {
               </div>
               
               <div className="p-4">
-                <h3 className="font-semibold text-lg mb-2 line-clamp-1">{product.name}</h3>
-                <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description}</p>
+                <h3 className="font-semibold text-lg mb-2 line-clamp-1">{product?.name}</h3>
+                <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product?.description}</p>
                 
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-2xl font-bold text-violet-600">₹{product.price}</span>
+                  <span className="text-2xl font-bold text-violet-600">₹{product?.price}</span>
                   <Badge className="bg-green-100 text-green-700">COD Available</Badge>
                 </div>
 
@@ -193,7 +198,7 @@ export function StorePage() {
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-gray-600">Sizes:</span>
                     <div className="flex flex-wrap gap-1">
-                      {product.size.map(size => (
+                      {product?.size.map(size => (
                         <Badge key={size} variant="secondary" className="text-xs">
                           {size}
                         </Badge>
@@ -204,7 +209,7 @@ export function StorePage() {
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-gray-600">Colors:</span>
                     <div className="flex flex-wrap gap-1">
-                      {product.color.map(color => (
+                      {product?.color.map(color => (
                         <Badge key={color} variant="secondary" className="text-xs">
                           {color}
                         </Badge>

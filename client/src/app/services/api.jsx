@@ -53,6 +53,11 @@ export const fetchUserData = async (id) => {
   return data;
 };
 
+export const fetchUserByUsername = async (username) => {
+  const { data } = await API.get(`/users/username/${username}`);
+  return data;
+};
+
 // PRODUCTS
 export const fetchProductsBySeller = async (id) => {
   const { data } = await API.get(`/products/seller/${id}`);
@@ -97,8 +102,13 @@ export const deleteProduct = async (id) => {
 };
 
 // ORDERS
-export const fetchOrdersBySeller = async (id) => {
-  const { data } = await API.get(`/orders/seller/${id}`);
+export const getOrdersBySeller = async (sellerId) => {
+  const { data } = await API.get(`/orders/seller/${sellerId}`);
+  return data;
+};
+
+export const updateOrderStatus = async (orderId, status) => {
+  const { data } = await API.put(`/orders/${orderId}`, { status });
   return data;
 };
 

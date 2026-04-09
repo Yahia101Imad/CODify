@@ -21,6 +21,8 @@ import { useUser } from "../hooks/useUser";
 import {jwtDecode} from "jwt-decode";
 import { useProductsBySeller } from "../hooks/useProductsBySeller";
 import { useDeleteProduct } from "../hooks/useDeleteProduct";
+import { useOrdersBySeller } from "../hooks/useOrdersBySeller";
+import { useUpdateOrder } from "../hooks/useUpdateOrder";
 
 export function Dashboard() {
 const navigate = useNavigate();
@@ -39,6 +41,8 @@ const userId = decoded.id;
 const { user } = useUser(userId);
 const { products, refetch } = useProductsBySeller(userId);
 const { remove } = useDeleteProduct();
+const { orders, refetch: refetchOrders } = useOrdersBySeller(userId);
+const { update } = useUpdateOrder();
 
   useEffect(() => {
   const token = localStorage.getItem("token");
@@ -56,12 +60,19 @@ const { remove } = useDeleteProduct();
 
 // console.log(decoded);
 
-  const stats = {
-    totalProducts: products.length,
+  // const stats = {
+  //   totalProducts: products.length,
     // totalOrders: orders.length,
     // pendingOrders: orders.filter(o => o.status === 'pending').length,
     // revenue: orders.reduce((sum, order) => sum + order.total, 0)
-  };
+  // };
+
+  const stats = {
+  totalProducts: products.length,
+  totalOrders: orders.length,
+  pendingOrders: orders.filter(o => o.status === 'pending').length,
+  revenue: orders.reduce((sum, order) => sum + order.total, 0)
+};
 
   const handleEditProduct = (product) => {
     setEditingProduct(product);
@@ -337,7 +348,10 @@ const { remove } = useDeleteProduct();
                         <div className="flex flex-col sm:flex-row gap-3">
                           <Select
                             value={order.status}
-                            onValueChange={(value) => updateOrder(order.id, value)}
+                            onValueChange={async (value) => {
+  await update(order._id, value);
+  refetchOrders();
+}}
                           >
                             <SelectTrigger className="w-full sm:w-48">
                               <SelectValue />
