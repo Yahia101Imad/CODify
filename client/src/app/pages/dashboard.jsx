@@ -20,6 +20,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { useUser } from "../hooks/useUser";
 import {jwtDecode} from "jwt-decode";
 import { useProductsBySeller } from "../hooks/useProductsBySeller";
+import { useDeleteProduct } from "../hooks/useDeleteProduct";
 
 export function Dashboard() {
 const navigate = useNavigate();
@@ -37,6 +38,7 @@ const userId = decoded.id;
 // fetching data from hooks
 const { user } = useUser(userId);
 const { products, refetch } = useProductsBySeller(userId);
+const { remove } = useDeleteProduct();
 
   useEffect(() => {
   const token = localStorage.getItem("token");
@@ -247,7 +249,10 @@ const { products, refetch } = useProductsBySeller(userId);
                         variant="outline"
                         size="sm"
                         className="flex-1 text-red-600 hover:bg-red-50"
-                        onClick={() => deleteProduct(product.id)}
+                        onClick={async () => {
+  await remove(product._id);
+  refetch();
+}}
                       >
                         <FiTrash2 size={14} className="mr-1" />
                         Delete

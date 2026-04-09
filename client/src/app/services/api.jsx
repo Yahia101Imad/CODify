@@ -85,6 +85,17 @@ export const updateProduct = async (id, productData) => {
   }
 };
 
+// DELETE PRODUCT
+export const deleteProduct = async (id) => {
+  try {
+    const { data } = await API.delete(`/products/${id}`);
+    return data;
+  } catch (error) {
+    console.log(id);
+    throw error.response?.data || error.message;
+  }
+};
+
 // ORDERS
 export const fetchOrdersBySeller = async (id) => {
   const { data } = await API.get(`/orders/seller/${id}`);
