@@ -4,13 +4,20 @@ import { fetchProductsBySeller } from "../services/api";
 export const useProductsBySeller = (id) => {
   const [products, setProducts] = useState([]);
 
-  useEffect(() => {
+  const fetchProducts = async () => {
     if (!id) return;
 
-    fetchProductsBySeller(id)
-      .then((res) => setProducts(res.data))
-      .catch((err) => console.log(err));
+    try {
+      const res = await fetchProductsBySeller(id);
+      setProducts(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
   }, [id]);
 
-  return { products };
+  return { products, refetch: fetchProducts };
 };

@@ -36,7 +36,7 @@ const userId = decoded.id;
 
 // fetching data from hooks
 const { user } = useUser(userId);
-const { products } = useProductsBySeller(userId);
+const { products, refetch } = useProductsBySeller(userId);
 
   useEffect(() => {
   const token = localStorage.getItem("token");
@@ -372,6 +372,7 @@ const { products } = useProductsBySeller(userId);
         open={isAddProductOpen}
         onClose={handleCloseModal}
         product={editingProduct}
+        refetch={refetch}
       />
     </div>
   );

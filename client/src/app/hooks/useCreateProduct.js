@@ -6,11 +6,11 @@ export const useCreateProduct = () => {
   const [error, setError] = useState(null);
 
   const create = async (data) => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
 
     try {
       //   setLoading(true);
-      const res = await createProduct(data, token);
+      const res = await createProduct(data);
       return res;
     } catch (err) {
       setError(err);

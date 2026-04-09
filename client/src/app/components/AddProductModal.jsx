@@ -15,8 +15,9 @@ import { Textarea } from "./ui/textarea";
 import { Badge } from "./ui/badge";
 import { useCreateProduct } from "../hooks/useCreateProduct";
 import { useUpdateProduct } from "../hooks/useUpdateProduct";
+// import {refetch} from '../hooks/useProductsBySeller'
 
-export function AddProductModal({ open, onClose, product }) {
+export function AddProductModal({ open, onClose, product, refetch }) {
   // const { addProduct, updateProduct } = useApp();
  
  const { create, error: createError } = useCreateProduct();
@@ -60,15 +61,17 @@ const { update, error: updateError } = useUpdateProduct();
 
   try {
     if (product) {
-      // تحديث المنتج
       await update(product.id, formData);
     } else {
-      // إنشاء منتج جديد
       await create(formData);
     }
 
+    if (refetch) {
+      await refetch(); // 🔥 هذا هو المفتاح
+    }
+
     onClose();
-    // إعادة تعيين الفورم
+
     setFormData({
       name: "",
       price: 0,
@@ -77,9 +80,9 @@ const { update, error: updateError } = useUpdateProduct();
       color: [],
       images: [],
     });
+
   } catch (err) {
-    console.log("Error creating/updating product:", err);
-    // يمكنك عرض error في UI إذا أحببت
+    console.log("Error:", err);
   }
 };
 
