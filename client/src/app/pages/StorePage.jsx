@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router";
-// import { ShoppingBag, Filter, X } from 'lucide-react';
 import { FiShoppingBag, FiFilter, FiX } from "react-icons/fi";
-// import { useApp } from '../context/AppContext';
 import { Button } from "../components/ui/button";
 import { Card } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
@@ -26,7 +24,6 @@ import { useStoreProducts } from "../hooks/useStoreProduct";
 
 export function StorePage() {
   const { username } = useParams();
-  // const { products } = useApp();
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [orderModalOpen, setOrderModalOpen] = useState(false);
   const [filterSize, setFilterSize] = useState("all");
@@ -41,21 +38,7 @@ export function StorePage() {
     selectedColor: "",
   });
 
-  // console.log(username)
-
   const { products, store } = useStoreProducts(username);
-
-  console.log(`username: ${username}`);
-  console.log("products:", products);
-  console.log("store:", store);
-
-  // Mock store data
-  // const store = {
-  //   name: 'John\'s Fashion Store',
-  //   username: username || 'johnseller',
-  //   description: 'Premium quality clothing at affordable prices',
-  //   banner: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200'
-  // };
 
   // Get all unique sizes and colors
   const allSizes = Array.from(new Set(products.flatMap((p) => p.size)));

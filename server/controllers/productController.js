@@ -55,7 +55,7 @@ exports.getProductsBySeller = async (req, res) => {
 
     // get products
     const products = await Product.find({ sellerId })
-      .sort({ createdAt: -1 }); // الأحدث أولاً
+      .sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,

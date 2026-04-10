@@ -9,7 +9,7 @@ export const useProductsBySeller = (id) => {
 
     try {
       const res = await fetchProductsBySeller(id);
-      setProducts(res.data);
+      setProducts(res);
     } catch (err) {
       console.log(err);
     }
