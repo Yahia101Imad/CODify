@@ -67,11 +67,13 @@ const { update } = useUpdateOrder();
     // revenue: orders.reduce((sum, order) => sum + order.total, 0)
   // };
 
+  console.log('products', products)
+
   const stats = {
-  totalProducts: products.length,
-  totalOrders: orders.length,
-  pendingOrders: orders.filter(o => o.status === 'pending').length,
-  revenue: orders.reduce((sum, order) => sum + order.total, 0)
+  totalProducts: products?.length || 0,
+  totalOrders: orders?.length || 0,
+  pendingOrders: orders?.filter(o => o.status === 'pending')?.length || 0,
+  revenue: orders?.reduce((sum, order) => sum + order.total, 0) || 0
 };
 
   const handleEditProduct = (product) => {
@@ -203,7 +205,7 @@ const { update } = useUpdateOrder();
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {products.map((product) => (
+              {products?.map((product) => (
                 <Card key={product.id} className="rounded-xl overflow-hidden hover:shadow-lg transition-shadow">
                   <div className="relative h-48 bg-gray-100">
                     <img
@@ -274,7 +276,7 @@ const { update } = useUpdateOrder();
               ))}
             </div>
 
-            {products.length === 0 && (
+            {products?.length === 0 && (
               <Card className="rounded-xl p-12 text-center">
                 <FiPackage size={48} className="mx-auto text-gray-400 mb-4" />
                 <h3 className="text-xl font-semibold mb-2">No products yet</h3>

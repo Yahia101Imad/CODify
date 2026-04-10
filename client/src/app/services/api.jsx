@@ -60,8 +60,8 @@ export const fetchUserByUsername = async (username) => {
 
 // PRODUCTS
 export const fetchProductsBySeller = async (id) => {
-  const { data } = await API.get(`/products/seller/${id}`);
-  return data;
+  const res = await API.get(`/products/seller/${id}`);
+  return res.data.data;
 };
 
 export const fetchProductsById = async (id) => {

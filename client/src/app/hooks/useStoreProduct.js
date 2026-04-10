@@ -14,8 +14,8 @@ export const useStoreProducts = (username) => {
 
       // 2. get user product
       const productsData = await fetchProductsBySeller(user._id);
-
-      setProducts(Array.isArray(productsData) ? productsData : []);
+      setProducts(productsData);
+      
     } catch (err) {
       console.error(err);
       setProducts([]);

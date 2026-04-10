@@ -110,7 +110,6 @@ exports.getUserById = async (req, res) => {
       success: true,
       data: user,
     });
-
   } catch (error) {
     console.error(error);
 
@@ -149,14 +148,10 @@ exports.updateUser = async (req, res) => {
     if (profileImage) updateData.profileImage = profileImage;
 
     // updating user
-    const updatedUser = await User.findByIdAndUpdate(
-      id,
-      updateData,
-      {
-        new: true, // return version after updating
-        runValidators: true, // run validation
-      }
-    ).select("-password");
+    const updatedUser = await User.findByIdAndUpdate(id, updateData, {
+      new: true, // return version after updating
+      runValidators: true, // run validation
+    }).select("-password");
 
     // if user does not exists
     if (!updatedUser) {
@@ -167,7 +162,6 @@ exports.updateUser = async (req, res) => {
       success: true,
       data: updatedUser,
     });
-
   } catch (error) {
     console.error(error);
 
@@ -175,6 +169,31 @@ exports.updateUser = async (req, res) => {
     if (error.name === "CastError") {
       return res.status(400).json({ message: "Invalid user ID" });
     }
+
+    res.status(500).json({
+      message: "Server error",
+    });
+  }
+};
+
+exports.getUserByUsername = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    // find user
+    const user = await User.findOne({ username }).select("-password");
+
+    // if user does not exists in DB
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    // else if user exists
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error fetching user by username:", error);
 
     res.status(500).json({
       message: "Server error",

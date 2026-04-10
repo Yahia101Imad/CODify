@@ -1,16 +1,27 @@
-import { useState } from 'react';
-import { useParams } from 'react-router';
+import { useState } from "react";
+import { useParams } from "react-router";
 // import { ShoppingBag, Filter, X } from 'lucide-react';
 import { FiShoppingBag, FiFilter, FiX } from "react-icons/fi";
 // import { useApp } from '../context/AppContext';
-import { Button } from '../components/ui/button';
-import { Card } from '../components/ui/card';
-import { Badge } from '../components/ui/badge';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../components/ui/dialog';
-import { Input } from '../components/ui/input';
-import { Label } from '../components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
-import { toast } from 'sonner';
+import { Button } from "../components/ui/button";
+import { Card } from "../components/ui/card";
+import { Badge } from "../components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "../components/ui/dialog";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../components/ui/select";
+import { toast } from "sonner";
 import { useStoreProducts } from "../hooks/useStoreProduct";
 
 export function StorePage() {
@@ -18,21 +29,25 @@ export function StorePage() {
   // const { products } = useApp();
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [orderModalOpen, setOrderModalOpen] = useState(false);
-  const [filterSize, setFilterSize] = useState('all');
-  const [filterColor, setFilterColor] = useState('all');
-  
+  const [filterSize, setFilterSize] = useState("all");
+  const [filterColor, setFilterColor] = useState("all");
+
   const [orderForm, setOrderForm] = useState({
-    customerName: '',
-    customerPhone: '',
-    customerAddress: '',
+    customerName: "",
+    customerPhone: "",
+    customerAddress: "",
     quantity: 1,
-    selectedSize: '',
-    selectedColor: ''
+    selectedSize: "",
+    selectedColor: "",
   });
 
   // console.log(username)
 
   const { products, store } = useStoreProducts(username);
+
+  console.log(`username: ${username}`);
+  console.log("products:", products);
+  console.log("store:", store);
 
   // Mock store data
   // const store = {
@@ -43,13 +58,15 @@ export function StorePage() {
   // };
 
   // Get all unique sizes and colors
-  const allSizes = Array.from(new Set(products.flatMap(p => p.size)));
-  const allColors = Array.from(new Set(products.flatMap(p => p.color)));
+  const allSizes = Array.from(new Set(products.flatMap((p) => p.size)));
+  const allColors = Array.from(new Set(products.flatMap((p) => p.color)));
 
   // Filter products
-  const filteredProducts = products.filter(product => {
-    if (filterSize !== "all" && !product.size.includes(filterSize)) return false;
-    if (filterColor !== 'all' && !product.color.includes(filterColor)) return false;
+  const filteredProducts = products.filter((product) => {
+    if (filterSize !== "all" && !product.size.includes(filterSize))
+      return false;
+    if (filterColor !== "all" && !product.color.includes(filterColor))
+      return false;
     return true;
   });
 
@@ -57,8 +74,8 @@ export function StorePage() {
     setSelectedProduct(product);
     setOrderForm({
       ...orderForm,
-      selectedSize: product.size[0] || '',
-      selectedColor: product.color[0] || ''
+      selectedSize: product.size[0] || "",
+      selectedColor: product.color[0] || "",
     });
     setOrderModalOpen(true);
   };
@@ -66,17 +83,20 @@ export function StorePage() {
   const handleSubmitOrder = (e) => {
     e.preventDefault();
     // In production, this would submit to backend
-    toast.success('Order placed successfully! The seller will contact you soon.', {
-      description: `Order for ${selectedProduct?.name} - ₹${selectedProduct?.price * orderForm.quantity}`
-    });
+    toast.success(
+      "Order placed successfully! The seller will contact you soon.",
+      {
+        description: `Order for ${selectedProduct?.name} - ₹${selectedProduct?.price * orderForm.quantity}`,
+      },
+    );
     setOrderModalOpen(false);
     setOrderForm({
-      customerName: '',
-      customerPhone: '',
-      customerAddress: '',
+      customerName: "",
+      customerPhone: "",
+      customerAddress: "",
       quantity: 1,
-      selectedSize: '',
-      selectedColor: ''
+      selectedSize: "",
+      selectedColor: "",
     });
   };
 
@@ -85,8 +105,8 @@ export function StorePage() {
       {/* Store Header */}
       <div className="relative h-64 bg-gradient-to-r from-violet-600 to-indigo-600 overflow-hidden">
         <div className="absolute inset-0 opacity-20">
-          <img 
-            src={store?.banner}
+          <img
+            src={store?.profileImage}
             alt="Store banner"
             className="w-full h-full object-cover"
           />
@@ -98,11 +118,11 @@ export function StorePage() {
                 <FiShoppingBag className="text-violet-600" size={32} />
               </div>
               <div>
-                <h1 className="text-4xl font-bold">{store?.name}</h1>
+                <h1 className="text-4xl font-bold">{store?.storeName}</h1>
                 <p className="text-violet-100">@{store?.username}</p>
               </div>
             </div>
-            <p className="text-lg text-violet-100">{store?.description}</p>
+            {/* <p className="text-lg text-violet-100">{store?.description}</p> */}
           </div>
         </div>
       </div>
@@ -115,7 +135,7 @@ export function StorePage() {
               <FiFilter size={20} className="text-gray-600" />
               <span className="font-medium">Filters:</span>
             </div>
-            
+
             <div className="flex flex-wrap gap-3 flex-1">
               <Select value={filterSize} onValueChange={setFilterSize}>
                 <SelectTrigger className="w-32">
@@ -123,8 +143,10 @@ export function StorePage() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Sizes</SelectItem>
-                  {allSizes.map(size => (
-                    <SelectItem key={size} value={size}>{size}</SelectItem>
+                  {allSizes.map((size) => (
+                    <SelectItem key={size} value={size}>
+                      {size}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -135,8 +157,10 @@ export function StorePage() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Colors</SelectItem>
-                  {allColors.map(color => (
-                    <SelectItem key={color} value={color}>{color}</SelectItem>
+                  {allColors.map((color) => (
+                    <SelectItem key={color} value={color}>
+                      {color}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -146,8 +170,8 @@ export function StorePage() {
                   variant="ghost"
                   size="sm"
                   onClick={() => {
-                    setFilterSize('');
-                    setFilterColor('');
+                    setFilterSize("");
+                    setFilterColor("");
                   }}
                 >
                   <FiX size={16} className="mr-1" />
@@ -157,7 +181,8 @@ export function StorePage() {
             </div>
 
             <div className="text-sm text-gray-600">
-              {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''}
+              {filteredProducts.length} product
+              {filteredProducts.length !== 1 ? "s" : ""}
             </div>
           </div>
         </Card>
@@ -165,7 +190,7 @@ export function StorePage() {
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredProducts.map((product) => (
-            <Card 
+            <Card
               key={product._id}
               className="rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer group"
               onClick={() => handleOrderClick(product)}
@@ -184,33 +209,49 @@ export function StorePage() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="p-4">
-                <h3 className="font-semibold text-lg mb-2 line-clamp-1">{product?.name}</h3>
-                <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product?.description}</p>
-                
+                <h3 className="font-semibold text-lg mb-2 line-clamp-1">
+                  {product?.name}
+                </h3>
+                <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+                  {product?.description}
+                </p>
+
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-2xl font-bold text-violet-600">₹{product?.price}</span>
-                  <Badge className="bg-green-100 text-green-700">COD Available</Badge>
+                  <span className="text-2xl font-bold text-violet-600">
+                    ₹{product?.price}
+                  </span>
+                  <Badge className="bg-green-100 text-green-700">
+                    COD Available
+                  </Badge>
                 </div>
 
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-gray-600">Sizes:</span>
                     <div className="flex flex-wrap gap-1">
-                      {product?.size.map(size => (
-                        <Badge key={size} variant="secondary" className="text-xs">
+                      {product?.size.map((size) => (
+                        <Badge
+                          key={size}
+                          variant="secondary"
+                          className="text-xs"
+                        >
                           {size}
                         </Badge>
                       ))}
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-gray-600">Colors:</span>
                     <div className="flex flex-wrap gap-1">
-                      {product?.color.map(color => (
-                        <Badge key={color} variant="secondary" className="text-xs">
+                      {product?.color.map((color) => (
+                        <Badge
+                          key={color}
+                          variant="secondary"
+                          className="text-xs"
+                        >
                           {color}
                         </Badge>
                       ))}
@@ -247,7 +288,9 @@ export function StorePage() {
               />
               <div>
                 <h4 className="font-semibold">{selectedProduct?.name}</h4>
-                <p className="text-2xl font-bold text-violet-600">₹{selectedProduct?.price}</p>
+                <p className="text-2xl font-bold text-violet-600">
+                  ₹{selectedProduct?.price}
+                </p>
               </div>
             </div>
 
@@ -256,7 +299,9 @@ export function StorePage() {
               <Input
                 id="name"
                 value={orderForm.customerName}
-                onChange={(e) => setOrderForm({ ...orderForm, customerName: e.target.value })}
+                onChange={(e) =>
+                  setOrderForm({ ...orderForm, customerName: e.target.value })
+                }
                 required
               />
             </div>
@@ -267,7 +312,9 @@ export function StorePage() {
                 id="phone"
                 type="tel"
                 value={orderForm.customerPhone}
-                onChange={(e) => setOrderForm({ ...orderForm, customerPhone: e.target.value })}
+                onChange={(e) =>
+                  setOrderForm({ ...orderForm, customerPhone: e.target.value })
+                }
                 required
               />
             </div>
@@ -277,7 +324,12 @@ export function StorePage() {
               <Input
                 id="address"
                 value={orderForm.customerAddress}
-                onChange={(e) => setOrderForm({ ...orderForm, customerAddress: e.target.value })}
+                onChange={(e) =>
+                  setOrderForm({
+                    ...orderForm,
+                    customerAddress: e.target.value,
+                  })
+                }
                 required
               />
             </div>
@@ -287,14 +339,18 @@ export function StorePage() {
                 <Label htmlFor="size">Size</Label>
                 <Select
                   value={orderForm.selectedSize}
-                  onValueChange={(value) => setOrderForm({ ...orderForm, selectedSize: value })}
+                  onValueChange={(value) =>
+                    setOrderForm({ ...orderForm, selectedSize: value })
+                  }
                 >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     {selectedProduct?.size.map((size) => (
-                      <SelectItem key={size} value={size}>{size}</SelectItem>
+                      <SelectItem key={size} value={size}>
+                        {size}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -304,14 +360,18 @@ export function StorePage() {
                 <Label htmlFor="color">Color</Label>
                 <Select
                   value={orderForm.selectedColor}
-                  onValueChange={(value) => setOrderForm({ ...orderForm, selectedColor: value })}
+                  onValueChange={(value) =>
+                    setOrderForm({ ...orderForm, selectedColor: value })
+                  }
                 >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     {selectedProduct?.color.map((color) => (
-                      <SelectItem key={color} value={color}>{color}</SelectItem>
+                      <SelectItem key={color} value={color}>
+                        {color}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -325,7 +385,12 @@ export function StorePage() {
                 type="number"
                 min="1"
                 value={orderForm.quantity}
-                onChange={(e) => setOrderForm({ ...orderForm, quantity: Number(e.target.value) })}
+                onChange={(e) =>
+                  setOrderForm({
+                    ...orderForm,
+                    quantity: Number(e.target.value),
+                  })
+                }
                 required
               />
             </div>
@@ -333,16 +398,22 @@ export function StorePage() {
             <div className="bg-violet-50 p-4 rounded-lg">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-gray-600">Subtotal:</span>
-                <span className="font-semibold">₹{selectedProduct?.price * orderForm.quantity}</span>
+                <span className="font-semibold">
+                  ₹{selectedProduct?.price * orderForm.quantity}
+                </span>
               </div>
               <div className="flex justify-between items-center mb-2">
                 <span className="text-gray-600">Payment Method:</span>
-                <Badge className="bg-green-100 text-green-700">Cash on Delivery</Badge>
+                <Badge className="bg-green-100 text-green-700">
+                  Cash on Delivery
+                </Badge>
               </div>
               <div className="border-t border-violet-200 pt-2 mt-2">
                 <div className="flex justify-between items-center">
                   <span className="font-semibold">Total:</span>
-                  <span className="text-2xl font-bold text-violet-600">₹{selectedProduct?.price * orderForm.quantity}</span>
+                  <span className="text-2xl font-bold text-violet-600">
+                    ₹{selectedProduct?.price * orderForm.quantity}
+                  </span>
                 </div>
               </div>
             </div>
