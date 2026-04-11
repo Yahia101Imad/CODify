@@ -21,6 +21,7 @@ import {
 } from "../components/ui/select";
 import { toast } from "sonner";
 import { useStoreProducts } from "../hooks/useStoreProduct";
+import { createOrder } from "../services/api";
 
 export function StorePage() {
   const { username } = useParams();
@@ -63,15 +64,49 @@ export function StorePage() {
     setOrderModalOpen(true);
   };
 
-  const handleSubmitOrder = (e) => {
-    e.preventDefault();
-    // In production, this would submit to backend
-    toast.success(
-      "Order placed successfully! The seller will contact you soon.",
-      {
-        description: `Order for ${selectedProduct?.name} - ₹${selectedProduct?.price * orderForm.quantity}`,
-      },
-    );
+  // const handleSubmitOrder = (e) => {
+  //   e.preventDefault();
+  //   // In production, this would submit to backend
+  //   toast.success(
+  //     "Order placed successfully! The seller will contact you soon.",
+  //     {
+  //       description: `Order for ${selectedProduct?.name} - ₹${selectedProduct?.price * orderForm.quantity}`,
+  //     },
+  //   );
+  //   setOrderModalOpen(false);
+  //   setOrderForm({
+  //     customerName: "",
+  //     customerPhone: "",
+  //     customerAddress: "",
+  //     quantity: 1,
+  //     selectedSize: "",
+  //     selectedColor: "",
+  //   });
+  // };
+
+  const handleSubmitOrder = async (e) => {
+  e.preventDefault();
+
+  try {
+    const orderData = {
+      productId: selectedProduct._id,
+      sellerId: selectedProduct.sellerId,
+
+      customerName: orderForm.customerName,
+      customerPhone: orderForm.customerPhone,
+      customerAddress: orderForm.customerAddress,
+
+      quantity: orderForm.quantity,
+      size: orderForm.selectedSize,
+      color: orderForm.selectedColor,
+
+      totalPrice: selectedProduct.price * orderForm.quantity,
+    };
+
+    await createOrder(orderData);
+
+    toast.success("Order placed successfully!");
+
     setOrderModalOpen(false);
     setOrderForm({
       customerName: "",
@@ -81,7 +116,11 @@ export function StorePage() {
       selectedSize: "",
       selectedColor: "",
     });
-  };
+  } catch (error) {
+    toast.error("Failed to place order");
+    console.error(error);
+  }
+};
 
   return (
     <div className="min-h-screen bg-gray-50">
