@@ -1,12 +1,5 @@
 import { useState, useEffect } from "react";
-// import { X, Upload, Plus, Trash2 } from "lucide-react";
-import {
-  FiX,
-  FiUpload,
-  FiPlus,
-  FiTrash2
-} from "react-icons/fi";
-// import { useApp } from "../context/AppContext";
+import { FiX, FiUpload, FiPlus, FiTrash2 } from "react-icons/fi";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -15,13 +8,10 @@ import { Textarea } from "./ui/textarea";
 import { Badge } from "./ui/badge";
 import { useCreateProduct } from "../hooks/useCreateProduct";
 import { useUpdateProduct } from "../hooks/useUpdateProduct";
-// import {refetch} from '../hooks/useProductsBySeller'
 
 export function AddProductModal({ open, onClose, product, refetch }) {
-  // const { addProduct, updateProduct } = useApp();
- 
- const { create, error: createError } = useCreateProduct();
-const { update, error: updateError } = useUpdateProduct();
+  const { create, error: createError } = useCreateProduct();
+  const { update, error: updateError } = useUpdateProduct();
 
   const [formData, setFormData] = useState({
     name: product?.name || "",
@@ -36,83 +26,80 @@ const { update, error: updateError } = useUpdateProduct();
   const [newColor, setNewColor] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   if (product) {
-  //     updateProduct(product.id, formData);
-  //   } else {
-  //     addProduct(formData);
-  //   }
-
-  //   onClose();
-  //   setFormData({
-  //     name: "",
-  //     price: 0,
-  //     description: "",
-  //     size: [],
-  //     color: [],
-  //     images: [],
-  //   });
-  // };
-
   useEffect(() => {
-  if (product) {
-    setFormData({
-      name: product.name,
-      price: product.price,
-      description: product.description,
-      size: product.size,
-      color: product.color,
-      images: product.images,
-    });
-  } else {
-    setFormData({
-      name: "",
-      price: 0,
-      description: "",
-      size: [],
-      color: [],
-      images: [],
-    });
-  }
-}, [product]);
+    if (product) {
+      setFormData({
+        name: product.name,
+        price: product.price,
+        description: product.description,
+        size: product.size,
+        color: product.color,
+        images: product.images,
+      });
+    } else {
+      setFormData({
+        name: "",
+        price: 0,
+        description: "",
+        size: [],
+        color: [],
+        images: [],
+      });
+    }
+  }, [product]);
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    if (product) {
-      await update(product._id, formData);
-    } else {
-      await create(formData);
+    try {
+      if (product) {
+        await update(product._id, formData);
+      } else {
+        await create(formData);
+      }
+
+      if (refetch) {
+        await refetch();
+      }
+
+      onClose();
+
+      setFormData({
+        name: "",
+        price: 0,
+        description: "",
+        size: [],
+        color: [],
+        images: [],
+      });
+    } catch (err) {
+      console.log("Error:", err);
     }
+  };
 
-    if (refetch) {
-      await refetch();
-    }
+  // const addSize = () => {
+  //   if (newSize && !formData.size.includes(newSize)) {
+  //     setFormData({ ...formData, size: [...formData.size, newSize] });
+  //     setNewSize("");
+  //   }
+  // };
+  const addSize = () => {
+    const sizes = newSize
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
 
-    onClose();
+    // setFormData({
+    //   ...formData,
+    //   size: [...formData.size, ...sizes],
+    // });
 
     setFormData({
-      name: "",
-      price: 0,
-      description: "",
-      size: [],
-      color: [],
-      images: [],
+      ...formData,
+      size: [...new Set([...formData.size, ...sizes])],
     });
 
-  } catch (err) {
-    console.log("Error:", err);
-  }
-};
-
-  const addSize = () => {
-    if (newSize && !formData.size.includes(newSize)) {
-      setFormData({ ...formData, size: [...formData.size, newSize] });
-      setNewSize("");
-    }
+    setNewSize("");
   };
 
   const removeSize = (sizeToRemove) => {
@@ -122,11 +109,28 @@ const { update, error: updateError } = useUpdateProduct();
     });
   };
 
+  // const addColor = () => {
+  //   if (newColor && !formData.color.includes(newColor)) {
+  //     setFormData({ ...formData, color: [...formData.color, newColor] });
+  //     setNewColor("");
+  //   }
+  // };
   const addColor = () => {
-    if (newColor && !formData.color.includes(newColor)) {
-      setFormData({ ...formData, color: [...formData.color, newColor] });
-      setNewColor("");
-    }
+    const colors = newColor
+      .split(",")
+      .map((c) => c.trim())
+      .filter(Boolean);
+
+    // setFormData({
+    //   ...formData,
+    //   color: [...formData.color, ...colors],
+    // });
+    setFormData({
+      ...formData,
+      color: [...new Set([...formData.color, ...colors])],
+    });
+
+    setNewColor("");
   };
 
   const removeColor = (colorToRemove) => {
@@ -152,8 +156,16 @@ const { update, error: updateError } = useUpdateProduct();
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      {createError && <p className="text-red-500 text-sm">Error: {createError.message || createError}</p>}
-{updateError && <p className="text-red-500 text-sm">Error: {updateError.message || updateError}</p>}
+      {createError && (
+        <p className="text-red-500 text-sm">
+          Error: {createError.message || createError}
+        </p>
+      )}
+      {updateError && (
+        <p className="text-red-500 text-sm">
+          Error: {updateError.message || updateError}
+        </p>
+      )}
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl">
@@ -209,9 +221,28 @@ const { update, error: updateError } = useUpdateProduct();
             <div className="flex gap-2">
               <Input
                 value={newSize}
-                onChange={(e) => setNewSize(e.target.value)}
+                // onChange={(e) => setNewSize(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+
+                  if (value.includes(",")) {
+                    const sizes = value
+                      .split(",")
+                      .map((s) => s.trim())
+                      .filter(Boolean);
+
+                    setFormData((prev) => ({
+                      ...prev,
+                      size: [...new Set([...prev.size, ...sizes])],
+                    }));
+
+                    setNewSize("");
+                  } else {
+                    setNewSize(value);
+                  }
+                }}
                 placeholder="e.g., M, L, XL"
-                onKeyPress={(e) =>
+                onKeyDown={(e) =>
                   e.key === "Enter" && (e.preventDefault(), addSize())
                 }
               />
@@ -240,11 +271,33 @@ const { update, error: updateError } = useUpdateProduct();
             <div className="flex gap-2">
               <Input
                 value={newColor}
-                onChange={(e) => setNewColor(e.target.value)}
+                // onChange={(e) => setNewColor(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+
+                  if (value.includes(",")) {
+                    const colors = value
+                      .split(",")
+                      .map((c) => c.trim())
+                      .filter(Boolean);
+
+                    setFormData((prev) => ({
+                      ...prev,
+                      color: [...new Set([...prev.color, ...colors])],
+                    }));
+
+                    setNewColor("");
+                  } else {
+                    setNewColor(value);
+                  }
+                }}
                 placeholder="e.g., Red, Blue, Green"
-                onKeyPress={(e) =>
-                  e.key === "Enter" && (e.preventDefault(), addColor())
-                }
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === ",") {
+                    e.preventDefault();
+                    addColor();
+                  }
+                }}
               />
               <Button type="button" onClick={addColor} size="sm">
                 <FiPlus size={16} />
@@ -268,19 +321,44 @@ const { update, error: updateError } = useUpdateProduct();
 
           <div className="space-y-2">
             <Label>Product Images</Label>
+
             <div className="flex gap-2">
               <Input
                 value={imageUrl}
-                onChange={(e) => setImageUrl(e.target.value)}
+                // onChange={(e) => setImageUrl(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+
+                  if (value.includes(",")) {
+                    const images = value
+                      .split(",")
+                      .map((i) => i.trim())
+                      .filter(Boolean);
+
+                    setFormData((prev) => ({
+                      ...prev,
+                      images: [...new Set([...prev.images, ...images])],
+                    }));
+
+                    setImageUrl("");
+                  } else {
+                    setImageUrl(value);
+                  }
+                }}
                 placeholder="Enter image URL"
-                onKeyPress={(e) =>
-                  e.key === "Enter" && (e.preventDefault(), addImage())
-                }
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    addImage();
+                  }
+                }}
               />
+
               <Button type="button" onClick={addImage} size="sm">
                 <FiUpload size={16} />
               </Button>
             </div>
+
             <div className="grid grid-cols-3 gap-4 mt-4">
               {formData.images.map((image, index) => (
                 <div key={index} className="relative group">
@@ -289,6 +367,7 @@ const { update, error: updateError } = useUpdateProduct();
                     alt={`Product ${index + 1}`}
                     className="w-full h-32 object-cover rounded-lg"
                   />
+
                   <button
                     type="button"
                     onClick={() => removeImage(image)}

@@ -11,6 +11,7 @@ export const useCreateProduct = () => {
     try {
       //   setLoading(true);
       const res = await createProduct(data);
+      console.log('create res: ', res);
       return res;
     } catch (err) {
       setError(err);

@@ -30,7 +30,6 @@ import { useOrdersBySeller } from "../hooks/useOrdersBySeller";
 import { useUpdateOrder } from "../hooks/useUpdateOrder";
 
 export function Dashboard() {
-  // console.log("DASHBOARD RUNNING");
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("products");
   const [isAddProductOpen, setIsAddProductOpen] = useState(false);
@@ -48,7 +47,9 @@ export function Dashboard() {
   const { orders, refetch: refetchOrders } = useOrdersBySeller(userId);
   const { update } = useUpdateOrder();
 
-  // console.log("ORDERS API RESPONSE:", orders);
+  // Debugging
+  // console.log("PRODUCT API RESPONSE:", products?.[0]);
+  // console.log('PRODUCT SIZE: ', products[0]?.size)
 
   useEffect(() => {
     const token = localStorage.getItem("token");
