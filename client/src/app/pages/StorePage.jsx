@@ -296,7 +296,7 @@ export function StorePage() {
 
       {/* Order Modal */}
       <Dialog open={orderModalOpen} onOpenChange={setOrderModalOpen}>
-        <DialogContent className="max-w-lg">
+        <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Place Order - {selectedProduct?.name}</DialogTitle>
           </DialogHeader>
