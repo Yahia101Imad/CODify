@@ -48,6 +48,8 @@ export function Dashboard() {
   const { orders, refetch: refetchOrders } = useOrdersBySeller(userId);
   const { update } = useUpdateOrder();
 
+  // console.log("ORDERS API RESPONSE:", orders);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
