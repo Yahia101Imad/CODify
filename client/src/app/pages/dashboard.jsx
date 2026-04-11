@@ -47,10 +47,6 @@ export function Dashboard() {
   const { orders, refetch: refetchOrders } = useOrdersBySeller(userId);
   const { update } = useUpdateOrder();
 
-  // Debugging
-  // console.log("PRODUCT API RESPONSE:", products?.[0]);
-  // console.log('PRODUCT SIZE: ', products[0]?.size)
-
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {

@@ -77,22 +77,11 @@ export function AddProductModal({ open, onClose, product, refetch }) {
     }
   };
 
-  // const addSize = () => {
-  //   if (newSize && !formData.size.includes(newSize)) {
-  //     setFormData({ ...formData, size: [...formData.size, newSize] });
-  //     setNewSize("");
-  //   }
-  // };
   const addSize = () => {
     const sizes = newSize
       .split(",")
       .map((s) => s.trim())
       .filter(Boolean);
-
-    // setFormData({
-    //   ...formData,
-    //   size: [...formData.size, ...sizes],
-    // });
 
     setFormData({
       ...formData,
@@ -109,22 +98,12 @@ export function AddProductModal({ open, onClose, product, refetch }) {
     });
   };
 
-  // const addColor = () => {
-  //   if (newColor && !formData.color.includes(newColor)) {
-  //     setFormData({ ...formData, color: [...formData.color, newColor] });
-  //     setNewColor("");
-  //   }
-  // };
   const addColor = () => {
     const colors = newColor
       .split(",")
       .map((c) => c.trim())
       .filter(Boolean);
 
-    // setFormData({
-    //   ...formData,
-    //   color: [...formData.color, ...colors],
-    // });
     setFormData({
       ...formData,
       color: [...new Set([...formData.color, ...colors])],
@@ -221,7 +200,6 @@ export function AddProductModal({ open, onClose, product, refetch }) {
             <div className="flex gap-2">
               <Input
                 value={newSize}
-                // onChange={(e) => setNewSize(e.target.value)}
                 onChange={(e) => {
                   const value = e.target.value;
 
@@ -271,7 +249,6 @@ export function AddProductModal({ open, onClose, product, refetch }) {
             <div className="flex gap-2">
               <Input
                 value={newColor}
-                // onChange={(e) => setNewColor(e.target.value)}
                 onChange={(e) => {
                   const value = e.target.value;
 
@@ -325,7 +302,6 @@ export function AddProductModal({ open, onClose, product, refetch }) {
             <div className="flex gap-2">
               <Input
                 value={imageUrl}
-                // onChange={(e) => setImageUrl(e.target.value)}
                 onChange={(e) => {
                   const value = e.target.value;
 
