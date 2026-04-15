@@ -28,6 +28,7 @@ import { useProductsBySeller } from "../hooks/useProductsBySeller";
 import { useDeleteProduct } from "../hooks/useDeleteProduct";
 import { useOrdersBySeller } from "../hooks/useOrdersBySeller";
 import { useUpdateOrder } from "../hooks/useUpdateOrder";
+import { toast } from "sonner";
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -46,6 +47,19 @@ export function Dashboard() {
   const { remove } = useDeleteProduct();
   const { orders, refetch: refetchOrders } = useOrdersBySeller(userId);
   const { update } = useUpdateOrder();
+
+  // store link
+  const storeUrl = `${window.location.origin}/store/${user?.username}`;
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(storeUrl);
+      toast.success("Link copied successfully!", {
+  description: "Your store link is ready to share 🚀",
+});
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -162,6 +176,38 @@ export function Dashboard() {
             </CardContent>
           </Card>
         </div>
+
+        {/* Store Link */}
+        <Card className="mb-8 border-2 rounded-xl">
+          <CardContent className="p-6">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div>
+                <h2 className="text-lg font-semibold mb-1">Your Store Link</h2>
+                <p className="text-sm text-gray-600">
+                  Share this link with your customers
+                </p>
+              </div>
+
+              <div className="flex gap-2 w-full md:w-auto">
+                <div
+                  onClick={handleCopy}
+                  className="flex-1 border rounded-md px-3 py-2 text-sm bg-gray-100 cursor-pointer hover:bg-gray-200 transition"
+                  title="Click to copy"
+                >
+                  {storeUrl}
+                </div>
+
+                <Button onClick={handleCopy}>Copy</Button>
+
+                <a href={storeUrl} target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline">
+                    <FiExternalLink />
+                  </Button>
+                </a>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Navigation Tabs */}
         <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
