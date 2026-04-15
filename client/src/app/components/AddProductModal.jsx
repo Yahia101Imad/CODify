@@ -13,6 +13,48 @@ export function AddProductModal({ open, onClose, product, refetch }) {
   const { create, error: createError } = useCreateProduct();
   const { update, error: updateError } = useUpdateProduct();
 
+  // drag & drop img
+  const [isDragging, setIsDragging] = useState(false);
+  const uploadImage = async (file) => {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const res = await fetch("http://localhost:5000/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+
+      console.log("Response from server:", data);
+
+      setFormData((prev) => ({
+        ...prev,
+        images: [...prev.images, data.url],
+      }));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+
+    const file = e.dataTransfer.files[0];
+    if (file) uploadImage(file);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
   const [formData, setFormData] = useState({
     name: product?.name || "",
     price: product?.price || 0,
@@ -353,6 +395,30 @@ export function AddProductModal({ open, onClose, product, refetch }) {
                   </button>
                 </div>
               ))}
+            </div>
+            <div
+              onDrop={handleDrop}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition 
+    ${isDragging ? "border-indigo-600 bg-indigo-50" : "border-gray-300"}`}
+            >
+              <p className="text-gray-500">drag and drop here:</p>
+
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                id="fileInput"
+                onChange={(e) => uploadImage(e.target.files[0])}
+              />
+
+              <label
+                htmlFor="fileInput"
+                className="block mt-2 text-indigo-600 cursor-pointer"
+              >
+                choose a picture
+              </label>
             </div>
           </div>
 

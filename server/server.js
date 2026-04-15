@@ -1,10 +1,12 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
 const orderRoutes = require('./routes/orderRoutes')
-require("dotenv").config();
+const uploadRoutes = require("./routes/uploadRoutes");
+
 
 const app = express();
 
@@ -17,6 +19,8 @@ app.use("/api/auth", userRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
+// image upload
+app.use("/api/upload", uploadRoutes);
 
 // connect to DB
 connectDB();
