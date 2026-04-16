@@ -1,7 +1,10 @@
-# CODify
 # 🚀 Codify Project
 
-A modern full-stack web application built with React and Node.js, focused on clean UI, authentication, and user dashboards.
+## 📌 Introduction
+
+CODify is a full-stack MERN web application built to help business owners and sellers manage cash-on-delivery operations more efficiently.
+
+The platform provides a structured system for handling orders, tracking customers, and simplifying the sales workflow. It also enhances the customer experience by offering a smooth and easy ordering process, making online purchases faster and more accessible.
 
 ---
 
