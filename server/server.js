@@ -11,7 +11,9 @@ const uploadRoutes = require("./routes/uploadRoutes");
 const app = express();
 
 // middlewares
-app.use(cors());
+app.use(cors({
+    origin: '*'
+}));
 app.use(express.json());
 
 // routes
