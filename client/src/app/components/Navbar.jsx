@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router";
 import { FaShoppingBag, FaUser, FaSignOutAlt, FaTachometerAlt } from "react-icons/fa";
 import { useApp } from "../context/AppContext";
 import { Button } from "./ui/button";
+import logo from "../assets/CODify.png";
 
 export function Navbar() {
   const { user, logout } = useApp();
@@ -16,10 +17,9 @@ export function Navbar() {
           
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-gradient-to-br from-violet-600 to-indigo-600 rounded-xl flex items-center justify-center">
-              <FaShoppingBag className="text-white" size={20} />
-            </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
+              <img src={logo} alt="CODify" className="w-10 h-10" />
+            {/* </div> */}
+            <span className="text-xl font-bold bg-gradient-to-r from-orange-600 to-yellow-600 bg-clip-text text-transparent">
               CODify
             </span>
           </Link>
@@ -32,7 +32,7 @@ export function Navbar() {
                   <Button
                     variant={isActive("/dashboard") ? "default" : "ghost"}
                     size="sm"
-                    className={isActive("/dashboard") ? "bg-gradient-to-r from-violet-600 to-indigo-600" : ""}
+                    className={isActive("/dashboard") ? "bg-gradient-to-r from-orange-600 to-yellow-600" : ""}
                   >
                     <FaTachometerAlt size={16} className="mr-2" />
                     Dashboard
@@ -43,7 +43,7 @@ export function Navbar() {
                   <Button
                     variant={isActive("/profile") ? "default" : "ghost"}
                     size="sm"
-                    className={isActive("/profile") ? "bg-gradient-to-r from-violet-600 to-indigo-600" : ""}
+                    className={isActive("/profile") ? "bg-gradient-to-r from-orange-600 to-yellow-600" : ""}
                   >
                     <FaUser size={16} className="mr-2" />
                     Profile
@@ -57,7 +57,7 @@ export function Navbar() {
               </>
             ) : (
               <Link to="/auth">
-                <Button className="bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700">
+                <Button className="bg-gradient-to-r from-orange-600 to-yellow-600 hover:from-orange-700 hover:to-yellow-700">
                   Get Started
                 </Button>
               </Link>

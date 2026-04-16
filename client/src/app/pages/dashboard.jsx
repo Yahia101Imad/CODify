@@ -120,29 +120,29 @@ export function Dashboard() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card className="rounded-xl border-2 hover:border-violet-200 transition-colors">
+          <Card className="rounded-xl border-2 hover:border-orange-200 transition-colors">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-600 mb-1">Total Products</p>
                   <p className="text-3xl font-bold">{stats.totalProducts}</p>
                 </div>
-                <div className="w-12 h-12 bg-violet-100 rounded-xl flex items-center justify-center">
-                  <FiPackage className="text-violet-600" size={24} />
+                <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+                  <FiPackage className="text-orange-600" size={24} />
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="rounded-xl border-2 hover:border-indigo-200 transition-colors">
+          <Card className="rounded-xl border-2 hover:border-yellow-200 transition-colors">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-600 mb-1">Total Orders</p>
                   <p className="text-3xl font-bold">{stats.totalOrders}</p>
                 </div>
-                <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">
-                  <FiShoppingCart className="text-indigo-600" size={24} />
+                <div className="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
+                  <FiShoppingCart className="text-yellow-600" size={24} />
                 </div>
               </div>
             </CardContent>
@@ -216,7 +216,7 @@ export function Dashboard() {
             onClick={() => setActiveTab("products")}
             className={
               activeTab === "products"
-                ? "bg-gradient-to-r from-violet-600 to-indigo-600"
+                ? "bg-gradient-to-r from-orange-600 to-yellow-600"
                 : ""
             }
           >
@@ -228,7 +228,7 @@ export function Dashboard() {
             onClick={() => setActiveTab("orders")}
             className={
               activeTab === "orders"
-                ? "bg-gradient-to-r from-violet-600 to-indigo-600"
+                ? "bg-gradient-to-r from-orange-600 to-yellow-600"
                 : ""
             }
           >
@@ -247,7 +247,7 @@ export function Dashboard() {
               <h2 className="text-2xl font-bold">Your Products</h2>
               <Button
                 onClick={() => setIsAddProductOpen(true)}
-                className="bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700"
+                className="bg-gradient-to-r from-orange-600 to-yellow-600 hover:from-orange-700 hover:to-yellow-700"
               >
                 <FiPlus size={16} className="mr-2" />
                 Add Product
@@ -275,7 +275,7 @@ export function Dashboard() {
                       {product.description}
                     </p>
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-2xl font-bold text-violet-600">
+                      <span className="text-2xl font-bold text-orange-600">
                         ₹{product.price}
                       </span>
                     </div>
@@ -356,7 +356,7 @@ export function Dashboard() {
                 </p>
                 <Button
                   onClick={() => setIsAddProductOpen(true)}
-                  className="bg-gradient-to-r from-violet-600 to-indigo-600"
+                  className="bg-gradient-to-r from-orange-600 to-yellow-600"
                 >
                   <FiPlus size={16} className="mr-2" />
                   Add Your First Product
@@ -430,7 +430,7 @@ export function Dashboard() {
                           </div>
                           <div>
                             <p className="text-gray-600">Total</p>
-                            <p className="font-medium text-violet-600">
+                            <p className="font-medium text-orange-600">
                               ₹{order.total}
                             </p>
                           </div>

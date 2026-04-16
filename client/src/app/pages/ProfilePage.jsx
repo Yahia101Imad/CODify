@@ -56,7 +56,7 @@ export function ProfilePage() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Profile Header */}
         <Card className="rounded-2xl mb-8 overflow-hidden">
-          <div className="h-32 bg-gradient-to-r from-violet-600 to-indigo-600"></div>
+          <div className="h-32 bg-gradient-to-r from-orange-600 to-yellow-600"></div>
           <CardContent className="p-8 -mt-16">
             <div className="flex flex-col md:flex-row gap-6 items-start md:items-end">
               <div className="relative">
@@ -68,8 +68,8 @@ export function ProfilePage() {
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-violet-100 to-indigo-100 flex items-center justify-center">
-                      <FiUser size={48} className="text-violet-600" />
+                    <div className="w-full h-full bg-gradient-to-br from-orange-100 to-yellow-100 flex items-center justify-center">
+                      <FiUser size={48} className="text-orange-600" />
                     </div>
                   )}
                 </div>
@@ -82,7 +82,7 @@ export function ProfilePage() {
                 <div className="flex flex-wrap gap-3">
                   <Button
                     onClick={() => setIsEditModalOpen(true)}
-                    className="bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700"
+                    className="bg-gradient-to-r from-orange-600 to-yellow-600 hover:from-orange-700 hover:to-yellow-700"
                   >
                     <FiEdit size={16} className="mr-2" />
                     Edit Profile
@@ -115,13 +115,13 @@ export function ProfilePage() {
               </div>
               <div>
                 <Label className="text-sm text-gray-600">Store URL</Label>
-                <p className="text-lg font-semibold mt-1 text-violet-600">
+                <p className="text-lg font-semibold mt-1 text-orange-600">
                   /store/{user.username}
                 </p>
               </div>
             </div>
 
-            <div className="bg-violet-50 p-4 rounded-xl border-2 border-violet-100">
+            <div className="bg-orange-50 p-4 rounded-xl border-2 border-orange-100">
               <p className="text-sm text-gray-700 mb-2">
                 Share your store link with customers:
               </p>
@@ -147,11 +147,11 @@ export function ProfilePage() {
 
         {/* Statistics */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <Card className="rounded-xl border-2 hover:border-violet-200 transition-colors">
+          <Card className="rounded-xl border-2 hover:border-orange-200 transition-colors">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-violet-100 rounded-xl flex items-center justify-center">
-                  <FiPackage className="text-violet-600" size={24} />
+                <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
+                  <FiPackage className="text-orange-600" size={24} />
                 </div>
                 <div>
                   <p className="text-sm text-gray-600">Total Products</p>
@@ -161,11 +161,11 @@ export function ProfilePage() {
             </CardContent>
           </Card>
 
-          <Card className="rounded-xl border-2 hover:border-indigo-200 transition-colors">
+          <Card className="rounded-xl border-2 hover:border-yellow-200 transition-colors">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">
-                  <FiShoppingCart className="text-indigo-600" size={24} />
+                <div className="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
+                  <FiShoppingCart className="text-yellow-600" size={24} />
                 </div>
                 <div>
                   <p className="text-sm text-gray-600">Total Orders</p>
@@ -303,7 +303,7 @@ export function ProfilePage() {
               </Button>
               <Button
                 type="submit"
-                className="flex-1 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700"
+                className="flex-1 bg-gradient-to-r from-orange-600 to-yellow-600 hover:from-orange-700 hover:to-yellow-700"
               >
                 Save Changes
               </Button>

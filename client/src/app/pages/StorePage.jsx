@@ -64,26 +64,6 @@ export function StorePage() {
     setOrderModalOpen(true);
   };
 
-  // const handleSubmitOrder = (e) => {
-  //   e.preventDefault();
-  //   // In production, this would submit to backend
-  //   toast.success(
-  //     "Order placed successfully! The seller will contact you soon.",
-  //     {
-  //       description: `Order for ${selectedProduct?.name} - ₹${selectedProduct?.price * orderForm.quantity}`,
-  //     },
-  //   );
-  //   setOrderModalOpen(false);
-  //   setOrderForm({
-  //     customerName: "",
-  //     customerPhone: "",
-  //     customerAddress: "",
-  //     quantity: 1,
-  //     selectedSize: "",
-  //     selectedColor: "",
-  //   });
-  // };
-
   const handleSubmitOrder = async (e) => {
   e.preventDefault();
 
@@ -125,7 +105,7 @@ export function StorePage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Store Header */}
-      <div className="relative h-64 bg-gradient-to-r from-violet-600 to-indigo-600 overflow-hidden">
+      <div className="relative h-64 bg-gradient-to-r from-orange-600 to-yellow-600 overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <img
             src={store?.profileImage}
@@ -137,14 +117,14 @@ export function StorePage() {
           <div className="text-white">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center">
-                <FiShoppingBag className="text-violet-600" size={32} />
+                <FiShoppingBag className="text-orange-600" size={32} />
               </div>
               <div>
                 <h1 className="text-4xl font-bold">{store?.storeName}</h1>
-                <p className="text-violet-100">@{store?.username}</p>
+                <p className="text-orange-100">@{store?.username}</p>
               </div>
             </div>
-            {/* <p className="text-lg text-violet-100">{store?.description}</p> */}
+            {/* <p className="text-lg text-orange-100">{store?.description}</p> */}
           </div>
         </div>
       </div>
@@ -225,7 +205,7 @@ export function StorePage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                   <div className="absolute bottom-4 left-4 right-4">
-                    <Button className="w-full bg-white text-violet-600 hover:bg-gray-100">
+                    <Button className="w-full bg-white text-orange-600 hover:bg-gray-100">
                       Order Now
                     </Button>
                   </div>
@@ -241,7 +221,7 @@ export function StorePage() {
                 </p>
 
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-2xl font-bold text-violet-600">
+                  <span className="text-2xl font-bold text-orange-600">
                     ₹{product?.price}
                   </span>
                   <Badge className="bg-green-100 text-green-700">
@@ -310,7 +290,7 @@ export function StorePage() {
               />
               <div>
                 <h4 className="font-semibold">{selectedProduct?.name}</h4>
-                <p className="text-2xl font-bold text-violet-600">
+                <p className="text-2xl font-bold text-orange-600">
                   ₹{selectedProduct?.price}
                 </p>
               </div>
@@ -417,7 +397,7 @@ export function StorePage() {
               />
             </div>
 
-            <div className="bg-violet-50 p-4 rounded-lg">
+            <div className="bg-orange-50 p-4 rounded-lg">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-gray-600">Subtotal:</span>
                 <span className="font-semibold">
@@ -430,10 +410,10 @@ export function StorePage() {
                   Cash on Delivery
                 </Badge>
               </div>
-              <div className="border-t border-violet-200 pt-2 mt-2">
+              <div className="border-t border-orange-200 pt-2 mt-2">
                 <div className="flex justify-between items-center">
                   <span className="font-semibold">Total:</span>
-                  <span className="text-2xl font-bold text-violet-600">
+                  <span className="text-2xl font-bold text-orange-600">
                     ₹{selectedProduct?.price * orderForm.quantity}
                   </span>
                 </div>
@@ -451,7 +431,7 @@ export function StorePage() {
               </Button>
               <Button
                 type="submit"
-                className="flex-1 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700"
+                className="flex-1 bg-gradient-to-r from-orange-600 to-yellow-600 hover:from-orange-700 hover:to-yellow-700"
               >
                 Place Order
               </Button>

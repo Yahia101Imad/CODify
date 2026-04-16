@@ -123,15 +123,15 @@ export function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-indigo-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-yellow-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-violet-600 to-indigo-600 rounded-xl flex items-center justify-center">
+            <div className="w-12 h-12 bg-gradient-to-br from-orange-600 to-yellow-600 rounded-xl flex items-center justify-center">
               <FaShoppingBag className="text-white" size={24} />
             </div>
-            <span className="text-3xl font-bold bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-yellow-600 bg-clip-text text-transparent">
               CODify
             </span>
           </div>
@@ -227,13 +227,13 @@ export function AuthPage() {
 
                 <Button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 h-11 rounded-lg text-base"
+                  className="w-full bg-gradient-to-r from-orange-600 to-yellow-600 hover:from-orange-700 hover:to-yellow-700 h-11 rounded-lg text-base"
                 >
                   Login to Dashboard
                 </Button>
 
                 <p className="text-center text-sm text-gray-600">
-                  <a href="#" className="text-violet-600 hover:underline">
+                  <a href="#" className="text-orange-600 hover:underline">
                     Forgot password?
                   </a>
                 </p>
@@ -441,14 +441,14 @@ export function AuthPage() {
 
                 <Button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 h-11 rounded-lg text-base"
+                  className="w-full bg-gradient-to-r from-orange-600 to-yellow-600 hover:from-orange-700 hover:to-yellow-700 h-11 rounded-lg text-base"
                 >
                   Create Account
                 </Button>
 
                 <p className="text-center text-xs text-gray-600">
                   By registering, you agree to our{" "}
-                  <a href="#" className="text-violet-600 hover:underline">
+                  <a href="#" className="text-orange-600 hover:underline">
                     Terms of Service
                   </a>
                 </p>

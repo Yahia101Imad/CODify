@@ -16,7 +16,7 @@ import { Card } from '../components/ui/card';
 
 export function LandingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-yellow-50">
       <Navbar />
 
       {/* Hero Section */}
@@ -25,14 +25,14 @@ export function LandingPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <div className="inline-block">
-                <span className="bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-4 py-2 rounded-full text-sm font-medium">
+                <span className="bg-gradient-to-r from-orange-600 to-yellow-600 text-white px-4 py-2 rounded-full text-sm font-medium">
                   🚀 Start Selling Today
                 </span>
               </div>
 
               <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
                 Sell Products with{' '}
-                <span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-orange-600 to-yellow-600 bg-clip-text text-transparent">
                   Cash on Delivery
                 </span>
               </h1>
@@ -45,7 +45,7 @@ export function LandingPage() {
                 <Link to="/auth">
                   <Button 
                     size="lg" 
-                    className="bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-lg px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all"
+                    className="bg-gradient-to-r from-orange-600 to-yellow-600 hover:from-orange-700 hover:to-yellow-700 text-lg px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all"
                   >
                     Register as Seller
                     <FaArrowRight className="ml-2" size={20} />
@@ -54,7 +54,7 @@ export function LandingPage() {
                 <Button 
                   size="lg" 
                   variant="outline"
-                  className="text-lg px-8 py-6 rounded-xl border-2 hover:border-violet-600 hover:text-violet-600 transition-all"
+                  className="text-lg px-8 py-6 rounded-xl border-2 hover:border-orange-600 hover:text-orange-600 transition-all"
                 >
                   Watch Demo
                 </Button>
@@ -87,8 +87,8 @@ export function LandingPage() {
                   className="w-full h-auto"
                 />
               </div>
-              <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-violet-400 to-indigo-400 rounded-full blur-3xl opacity-50"></div>
-              <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-indigo-400 to-violet-400 rounded-full blur-3xl opacity-50"></div>
+              <div className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-br from-orange-400 to-yellow-400 rounded-full blur-3xl opacity-50"></div>
+              <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full blur-3xl opacity-50"></div>
             </div>
           </div>
         </div>
@@ -105,9 +105,9 @@ export function LandingPage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="p-8 hover:shadow-xl transition-shadow border-2 hover:border-violet-200 rounded-2xl">
-              <div className="w-14 h-14 bg-gradient-to-br from-violet-100 to-indigo-100 rounded-xl flex items-center justify-center mb-4">
-                <FaBox className="text-violet-600" size={28} />
+            <Card className="p-8 hover:shadow-xl transition-shadow border-2 hover:border-orange-200 rounded-2xl">
+              <div className="w-14 h-14 bg-gradient-to-br from-orange-100 to-yellow-100 rounded-xl flex items-center justify-center mb-4">
+                <FaBox className="text-orange-600" size={28} />
               </div>
               <h3 className="text-xl font-semibold mb-3">Easy Product Management</h3>
               <p className="text-gray-600">
@@ -115,9 +115,9 @@ export function LandingPage() {
               </p>
             </Card>
 
-            <Card className="p-8 hover:shadow-xl transition-shadow border-2 hover:border-violet-200 rounded-2xl">
-              <div className="w-14 h-14 bg-gradient-to-br from-indigo-100 to-violet-100 rounded-xl flex items-center justify-center mb-4">
-                <FaCreditCard className="text-indigo-600" size={28} />
+            <Card className="p-8 hover:shadow-xl transition-shadow border-2 hover:border-orange-200 rounded-2xl">
+              <div className="w-14 h-14 bg-gradient-to-br from-yellow-100 to-orange-100 rounded-xl flex items-center justify-center mb-4">
+                <FaCreditCard className="text-yellow-600" size={28} />
               </div>
               <h3 className="text-xl font-semibold mb-3">Cash on Delivery</h3>
               <p className="text-gray-600">
@@ -125,9 +125,9 @@ export function LandingPage() {
               </p>
             </Card>
 
-            <Card className="p-8 hover:shadow-xl transition-shadow border-2 hover:border-violet-200 rounded-2xl">
-              <div className="w-14 h-14 bg-gradient-to-br from-violet-100 to-indigo-100 rounded-xl flex items-center justify-center mb-4">
-                <FaChartLine className="text-violet-600" size={28} />
+            <Card className="p-8 hover:shadow-xl transition-shadow border-2 hover:border-orange-200 rounded-2xl">
+              <div className="w-14 h-14 bg-gradient-to-br from-orange-100 to-yellow-100 rounded-xl flex items-center justify-center mb-4">
+                <FaChartLine className="text-orange-600" size={28} />
               </div>
               <h3 className="text-xl font-semibold mb-3">Real-time Analytics</h3>
               <p className="text-gray-600">
@@ -135,9 +135,9 @@ export function LandingPage() {
               </p>
             </Card>
 
-            <Card className="p-8 hover:shadow-xl transition-shadow border-2 hover:border-violet-200 rounded-2xl">
-              <div className="w-14 h-14 bg-gradient-to-br from-indigo-100 to-violet-100 rounded-xl flex items-center justify-center mb-4">
-                <FaShieldAlt className="text-indigo-600" size={28} />
+            <Card className="p-8 hover:shadow-xl transition-shadow border-2 hover:border-orange-200 rounded-2xl">
+              <div className="w-14 h-14 bg-gradient-to-br from-yellow-100 to-orange-100 rounded-xl flex items-center justify-center mb-4">
+                <FaShieldAlt className="text-yellow-600" size={28} />
               </div>
               <h3 className="text-xl font-semibold mb-3">Secure & Reliable</h3>
               <p className="text-gray-600">
@@ -145,9 +145,9 @@ export function LandingPage() {
               </p>
             </Card>
 
-            <Card className="p-8 hover:shadow-xl transition-shadow border-2 hover:border-violet-200 rounded-2xl">
-              <div className="w-14 h-14 bg-gradient-to-br from-violet-100 to-indigo-100 rounded-xl flex items-center justify-center mb-4">
-                <FaBolt className="text-violet-600" size={28} />
+            <Card className="p-8 hover:shadow-xl transition-shadow border-2 hover:border-orange-200 rounded-2xl">
+              <div className="w-14 h-14 bg-gradient-to-br from-orange-100 to-yellow-100 rounded-xl flex items-center justify-center mb-4">
+                <FaBolt className="text-orange-600" size={28} />
               </div>
               <h3 className="text-xl font-semibold mb-3">Lightning Fast Setup</h3>
               <p className="text-gray-600">
@@ -155,9 +155,9 @@ export function LandingPage() {
               </p>
             </Card>
 
-            <Card className="p-8 hover:shadow-xl transition-shadow border-2 hover:border-violet-200 rounded-2xl">
-              <div className="w-14 h-14 bg-gradient-to-br from-indigo-100 to-violet-100 rounded-xl flex items-center justify-center mb-4">
-                <FaUsers className="text-indigo-600" size={28} />
+            <Card className="p-8 hover:shadow-xl transition-shadow border-2 hover:border-orange-200 rounded-2xl">
+              <div className="w-14 h-14 bg-gradient-to-br from-yellow-100 to-orange-100 rounded-xl flex items-center justify-center mb-4">
+                <FaUsers className="text-yellow-600" size={28} />
               </div>
               <h3 className="text-xl font-semibold mb-3">Custom Store Pages</h3>
               <p className="text-gray-600">
@@ -169,7 +169,7 @@ export function LandingPage() {
       </section>
 
       {/* Testimonials Section */}
-      <section id="testimonials" className="py-20 bg-gradient-to-br from-violet-50 to-indigo-50">
+      <section id="testimonials" className="py-20 bg-gradient-to-br from-orange-50 to-yellow-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Loved by Sellers</h2>
@@ -255,18 +255,18 @@ export function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-violet-600 to-indigo-600">
+      <section className="py-20 bg-gradient-to-r from-orange-600 to-yellow-600">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold text-white mb-6">
             Ready to Start Selling?
           </h2>
-          <p className="text-xl text-violet-100 mb-8">
+          <p className="text-xl text-orange-100 mb-8">
             Join thousands of successful sellers and grow your business with CODify
           </p>
           <Link to="/auth">
             <Button 
               size="lg" 
-              className="bg-white text-violet-600 hover:bg-gray-100 text-lg px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all"
+              className="bg-white text-orange-600 hover:bg-gray-100 text-lg px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all"
             >
               Create Your Store Now
               <FaArrowRight className="ml-2" size={20} />
