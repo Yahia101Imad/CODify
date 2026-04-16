@@ -1,7 +1,8 @@
+// import { createBrowserRouter } from "react-router";
 import { createBrowserRouter } from "react-router-dom";
 import { LandingPage } from "./pages/LandingPage";
 import { AuthPage } from "./pages/AuthPage";
-import { Dashboard } from "./pages/Dashboard";
+import { Dashboard } from "./pages/dashboard";
 import { StorePage } from "./pages/StorePage";
 import { ProfilePage } from "./pages/ProfilePage";
 import { NotFound } from "./pages/NotFound";
