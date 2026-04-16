@@ -3,7 +3,6 @@ import { useNavigate } from "react-router";
 import { FaShoppingBag, FaUser, FaStore } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { RiLockPasswordLine } from "react-icons/ri";
-// import { useApp } from "../context/AppContext";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
@@ -18,7 +17,6 @@ import { apiLogin, apiRegister } from "../services/api";
 
 export function AuthPage() {
   const navigate = useNavigate();
-  // const { login, register } = useApp();
 
   const [loginData, setLoginData] = useState({
     email: "",
@@ -37,92 +35,92 @@ export function AuthPage() {
   const [errors, setErrors] = useState({});
 
   const handleLogin = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const newErrors = {};
+    const newErrors = {};
 
-  // check fields
-  if (!loginData.email) newErrors.email = "Email is required";
-  if (!loginData.password) newErrors.password = "Password is required";
+    // check fields
+    if (!loginData.email) newErrors.email = "Email is required";
+    if (!loginData.password) newErrors.password = "Password is required";
 
-  if (Object.keys(newErrors).length > 0) {
-    setErrors(newErrors);
-    return;
-  }
-
-  try {
-    // call apiLogin fuc from api.jsx
-    const res = await apiLogin({ email: loginData.email, password: loginData.password });
-
-    // if succeed
-    // toast.success("Welcome back!", {
-    //   description: "Redirecting to your dashboard...",
-    // });
-
-    // go to dashboard in half sec
-    navigate("/dashboard")
-
-    console.log(res)
-  } catch (err) {
-    // if fail
-    setErrors({ general: "Invalid credentials" });
-    console.error(err);
-  }
-};
-
-const handleRegister = async (e) => {
-  e.preventDefault();
-  const newErrors = {};
-
-  // check fields
-  if (!registerData.name) newErrors.name = "Name is required";
-  if (!registerData.email) newErrors.email = "Email is required";
-  if (!registerData.username) newErrors.username = "Username is required";
-  if (!registerData.storeName) newErrors.storeName = "Store name is required";
-  if (!registerData.password) newErrors.password = "Password is required";
-  if (registerData.password !== registerData.confirmPassword) {
-    newErrors.confirmPassword = "Passwords do not match";
-  }
-  if (registerData.password && registerData.password.length < 6) {
-    newErrors.password = "Password must be at least 6 characters";
-  }
-
-  if (Object.keys(newErrors).length > 0) {
-    setErrors(newErrors);
-    return;
-  }
-
-  try {
-    // call api for register
-    const res = await apiRegister({
-      name: registerData.name,
-      email: registerData.email,
-      username: registerData.username,
-      storeName: registerData.storeName,
-      password: registerData.password,
-    });
-
-    if (res.token) {
-      localStorage.setItem("token", res.token);
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
     }
 
-    await apiLogin({
-      email: registerData.email,
-      password: registerData.password,
-    });
+    try {
+      const res = await apiLogin({
+        email: loginData.email,
+        password: loginData.password,
+      });
 
-    // toast.success("Account created successfully!", {
-    //   description: "Welcome to CODify! Redirecting to your dashboard...",
-    // });
+      if (!res || !res.token) {
+        setErrors({ general: "Invalid credentials" });
+        return;
+      }
 
-    navigate("/dashboard")
+      localStorage.setItem("token", res.token);
+      navigate("/dashboard");
 
-    console.log(res)
-  } catch (err) {
-    console.error(err);
-    setErrors({ general: err.response?.data?.message || "Registration failed" });
-  }
-};
+      console.log(res);
+    } catch (err) {
+      // if fail
+      setErrors({ general: "Invalid credentials" });
+      console.error(err);
+    }
+  };
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    const newErrors = {};
+
+    // check fields
+    if (!registerData.name) newErrors.name = "Name is required";
+    if (!registerData.email) newErrors.email = "Email is required";
+    if (!registerData.username) newErrors.username = "Username is required";
+    if (!registerData.storeName) newErrors.storeName = "Store name is required";
+    if (!registerData.password) newErrors.password = "Password is required";
+    if (registerData.password !== registerData.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+    }
+    if (registerData.password && registerData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    try {
+      // call api for register
+      const res = await apiRegister({
+        name: registerData.name,
+        email: registerData.email,
+        username: registerData.username,
+        storeName: registerData.storeName,
+        password: registerData.password,
+      });
+
+      if (res.token) {
+        localStorage.setItem("token", res.token);
+      }
+
+      await apiLogin({
+        email: registerData.email,
+        password: registerData.password,
+      });
+
+      navigate("/dashboard");
+
+      console.log(res);
+    } catch (err) {
+      console.error(err);
+      setErrors({
+        general: err.response?.data?.message || "Registration failed",
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-indigo-50 flex items-center justify-center p-4">

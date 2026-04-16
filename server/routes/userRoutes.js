@@ -4,9 +4,9 @@ const { register, login, getUserById, updateUser, getUserByUsername } = require(
 const protect = require('../middleware/authMiddleware')
 
 router.post("/register", register);
-router.post("/login",protect, login);
+router.post("/login", login);
 router.get("/:id", getUserById);
-router.put("/:id", updateUser);
+router.put("/:id", protect, updateUser);
 router.get("/username/:username", getUserByUsername);
 
 module.exports = router;
