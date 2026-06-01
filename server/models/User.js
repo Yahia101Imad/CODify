@@ -22,8 +22,12 @@ const userSchema = new mongoose.Schema(
 
     password: {
       type: String,
-      required: true,
+      required: false,
       minlength: 6,
+    },
+    googleId: {
+      type: String,
+      default: null,
     },
 
     storeName: {
@@ -39,18 +43,20 @@ const userSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
-
 
 // bcrypt password before save it
 userSchema.pre("save", async function (next) {
+  if (!this.password) return next(); // to stop (password = null)
+
   if (!this.isModified("password")) return next();
 
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
-});
 
+  next();
+});
 
 // compare password when login
 userSchema.methods.comparePassword = async function (enteredPassword) {

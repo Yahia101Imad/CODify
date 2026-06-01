@@ -14,9 +14,27 @@ import {
   TabsTrigger,
 } from "../components/ui/tabs";
 import { apiLogin, apiRegister } from "../services/api";
+import { GoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 export function AuthPage() {
   const navigate = useNavigate();
+  
+  // Google auth
+  const handleGoogleAuth = async (credentialResponse) => {
+    try {
+      const token = credentialResponse.credential;
+
+      const res = await axios.post("https://codify-saas.vercel.app/api/auth/google", {
+        token,
+      });
+
+      localStorage.setItem("token", res.data.token);
+      navigate("/dashboard");
+    } catch (err) {
+      console.error("Google auth error:", err);
+    }
+  };
 
   const [loginData, setLoginData] = useState({
     email: "",
@@ -231,6 +249,18 @@ export function AuthPage() {
                 >
                   Login to Dashboard
                 </Button>
+                <div className="flex flex-col gap-3 mt-4">
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 h-px bg-gray-300" />
+                    <span className="text-xs text-gray-500">OR</span>
+                    <div className="flex-1 h-px bg-gray-300" />
+                  </div>
+
+                  <GoogleLogin
+                    onSuccess={handleGoogleAuth}
+                    onError={() => console.log("Google Login Failed")}
+                  />
+                </div>
 
                 <p className="text-center text-sm text-gray-600">
                   <a href="#" className="text-orange-600 hover:underline">
@@ -445,6 +475,18 @@ export function AuthPage() {
                 >
                   Create Account
                 </Button>
+                <div className="flex flex-col gap-3 mt-4">
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 h-px bg-gray-300" />
+                    <span className="text-xs text-gray-500">OR</span>
+                    <div className="flex-1 h-px bg-gray-300" />
+                  </div>
+
+                  <GoogleLogin
+                    onSuccess={handleGoogleAuth}
+                    onError={() => console.log("Google Login Failed")}
+                  />
+                </div>
 
                 <p className="text-center text-xs text-gray-600">
                   By registering, you agree to our{" "}

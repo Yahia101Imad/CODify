@@ -10,10 +10,14 @@ const uploadRoutes = require("./routes/uploadRoutes");
 
 const app = express();
 
-// middlewares
 app.use(cors({
-    origin: '*'
+  origin: [
+    "http://localhost:5173",
+    "https://codify-saas.vercel.app"
+  ],
+  credentials: true
 }));
+
 app.use(express.json());
 
 // routes

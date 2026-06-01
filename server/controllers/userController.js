@@ -1,5 +1,62 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const { OAuth2Client } = require("google-auth-library");
+
+// Google auth 
+const client = new OAuth2Client(
+  process.env.GOOGLE_CLIENT_ID
+);
+
+exports.googleAuth = async (req, res) => {
+  try {
+    const { token } = req.body;
+
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+
+    const { email, name, picture } = payload;
+
+    // 1. check user
+    let user = await User.findOne({ email });
+
+    // 2. create if not exists
+    if (!user) {
+      user = await User.create({
+        username: name.toLowerCase().replace(/\s/g, ""),
+        email,
+        password: null,
+        storeName: name + "'s store",
+        profileImage: picture,
+      });
+    }
+
+    // 3. generate jwt
+    const jwtToken = generateToken(user._id);
+
+    // 4. send response
+    return res.status(200).json({
+      message: "Google login successful",
+      token: jwtToken,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        storeName: user.storeName,
+        profileImage: user.profileImage,
+      },
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
 
 // generate token
 const generateToken = (userId) => {
