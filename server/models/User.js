@@ -25,10 +25,6 @@ const userSchema = new mongoose.Schema(
       required: false,
       minlength: 6,
     },
-    googleId: {
-      type: String,
-      default: null,
-    },
 
     storeName: {
       type: String,
