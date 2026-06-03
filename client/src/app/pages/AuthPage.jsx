@@ -244,9 +244,26 @@ export function AuthPage() {
                   Login to Dashboard
                 </Button>
 
-                <button type="button" onClick={loginWithGoogle}>
-                  Sign in with Google
-                </button>
+                <div className="flex flex-col gap-3 mt-4">
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 h-px bg-gray-300" />
+                    <span className="text-xs text-gray-500">OR</span>
+                    <div className="flex-1 h-px bg-gray-300" />
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={loginWithGoogle}
+                    className="w-full flex items-center justify-center gap-3 border border-gray-300 rounded-lg py-2 hover:bg-gray-50"
+                  >
+                    <img
+                      src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                      alt="Google"
+                      className="w-5 h-5"
+                    />
+                    <span>Continue with Google</span>
+                  </button>
+                </div>
 
                 <p className="text-center text-sm text-gray-600">
                   <a href="#" className="text-orange-600 hover:underline">
@@ -462,9 +479,26 @@ export function AuthPage() {
                   Create Account
                 </Button>
 
-                <button type="button" onClick={loginWithGoogle}>
-                  Sign in with Google
-                </button>
+                <div className="flex flex-col gap-3 mt-4">
+                  <div className="flex items-center gap-2">
+                    <div className="flex-1 h-px bg-gray-300" />
+                    <span className="text-xs text-gray-500">OR</span>
+                    <div className="flex-1 h-px bg-gray-300" />
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={loginWithGoogle}
+                    className="w-full flex items-center justify-center gap-3 border border-gray-300 rounded-lg py-2 hover:bg-gray-50"
+                  >
+                    <img
+                      src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                      alt="Google"
+                      className="w-5 h-5"
+                    />
+                    <span>Continue with Google</span>
+                  </button>
+                </div>
 
                 <p className="text-center text-xs text-gray-600">
                   By registering, you agree to our{" "}
