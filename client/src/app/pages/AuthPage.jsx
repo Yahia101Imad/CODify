@@ -20,11 +20,42 @@ import { auth, googleProvider } from "../firebase";
 export function AuthPage() {
   const navigate = useNavigate();
 
+  // const loginWithGoogle = async () => {
+  //   try {
+  //     const result = await signInWithPopup(auth, googleProvider);
+  //     navigate("/dashboard");
+  //     console.log(result.user);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   const loginWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
+
+      const userData = {
+        email: result.user.email,
+        name: result.user.displayName,
+        photoURL: result.user.photoURL,
+        uid: result.user.uid,
+      };
+
+      const API_URL = import.meta.env.VITE_API_URL;
+
+      const res = await fetch(`${API_URL}/api/auth/google`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await res.json();
+
+      localStorage.setItem("token", data.token);
+
       navigate("/dashboard");
-      console.log(result.user);
     } catch (error) {
       console.log(error);
     }

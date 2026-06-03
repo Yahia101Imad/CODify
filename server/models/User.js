@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema(
       trim: true,
       minlength: 3,
       maxlength: 20,
+      default: () => `user_${Math.random().toString(36).slice(2, 8)}`,
     },
 
     email: {
@@ -30,6 +31,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      default: "MyStore",
     },
 
     profileImage: {
@@ -44,14 +46,11 @@ const userSchema = new mongoose.Schema(
 
 // bcrypt password before save it
 userSchema.pre("save", async function (next) {
-  if (!this.password) return next(); // to stop (password = null)
-
-  if (!this.isModified("password")) return next();
+  if (!this.isModified("password")) return
 
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 
-  next();
 });
 
 // compare password when login
